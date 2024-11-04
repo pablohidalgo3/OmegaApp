@@ -21,13 +21,28 @@ export default function Detail() {
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: "#C8D9F0" },
+          headerShadowVisible: false,
           headerTintColor: "black",
           headerTitleAlign: "center",
           headerLeft: () => {},
-          headerTitle: gameInfo === null ? "" : gameInfo.title,
+          headerTitle: () => (
+            <Text
+              style={{
+                color: "black",
+                fontSize: 20,
+                fontWeight: "bold",
+                maxWidth: 300, // Ajusta el ancho máximo según tus necesidades
+              }}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {gameInfo === null ? "" : gameInfo.title}
+            </Text>
+          ),
           headerRight: () => {},
         }}
       />
+
       <View>
         {gameInfo === null ? (
           <ActivityIndicator color={"#000"} size={"large"} />
