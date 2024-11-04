@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { FlatList, View, ActivityIndicator, Pressable } from "react-native";
+import { FlatList, ActivityIndicator } from "react-native";
 import { getLatestGames } from "../lib/metacritic";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AnimatedGameCard } from "./GameCard";
 import { Screen } from "./Screen";
 
 export function Main() {
   const [games, setGames] = useState([]);
-  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     getLatestGames().then((games) => {

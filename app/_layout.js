@@ -1,25 +1,19 @@
 import "../global.css";
-import { setStatusBarStyle } from "expo-status-bar";
 import { Stack } from "expo-router";
-import { View } from "react-native";
-import { Logo } from "../components/Logo";
+import { setStatusBarStyle } from "expo-status-bar";
 import { useEffect } from "react";
 
-export default function Layout() {
+export default function RootLayout() {
+  useEffect(() => {
+    setTimeout(() => {
+      setStatusBarStyle("dark");
+    }, 0);
+  }, []);
 
   return (
-    <View style={{ flex: 1 }}>
-      <Stack
-        screenOptions={{
-          headerStyle: { backgroundColor: "#C8D9F0" },
-          headerShadowVisible: false,
-          headerTintColor: "yellow",
-          headerTitle: "",
-          headerLeft: () => <Logo />,
-          statusBarStyle: "dark",
-          statusBarColor: "#C8D9F0"
-        }}
-      />
-    </View>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
   );
 }
+

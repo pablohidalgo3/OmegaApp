@@ -22,6 +22,7 @@ export default function Detail() {
         options={{
           headerStyle: { backgroundColor: "#C8D9F0" },
           headerTintColor: "black",
+          headerTitleAlign: "center",
           headerLeft: () => {},
           headerTitle: gameInfo === null ? "" : gameInfo.title,
           headerRight: () => {},
