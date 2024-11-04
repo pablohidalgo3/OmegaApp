@@ -1,11 +1,16 @@
 import "../global.css";
 import { StatusBar } from 'expo-status-bar';
-import { Link, Stack } from "expo-router";
-import { Pressable, View } from "react-native";
+import { Stack } from "expo-router";
+import { View, useColorScheme } from "react-native";
 import { Logo } from "../components/Logo";
-import { CircleInfoIcon } from "../components/Icons";
 
 export default function Layout() {
+
+  const colorScheme = useColorScheme();
+  const DarkStatusBar = () => (
+    <StatusBar style='dark' />
+  );
+
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
       <Stack
@@ -17,7 +22,8 @@ export default function Layout() {
           headerLeft: () => <Logo />,
         }}
       />
-      <StatusBar style='dark' />
+      {colorScheme === 'light' ? <DarkStatusBar /> : <DarkStatusBar />}
+      <StatusBar />
     </View>
   );
 }
