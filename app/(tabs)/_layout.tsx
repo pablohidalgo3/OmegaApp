@@ -1,6 +1,8 @@
+import "../../global.css";
 import { Tabs } from "expo-router";
-import { Logo } from "../../components/Logo";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { HomeIcon, InfoIcon } from "../../components/Icons";
+import { Logo } from "@/components/Logo";
 
 export default function TabLayout() {
   return (

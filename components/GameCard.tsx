@@ -10,7 +10,24 @@ import {
 import { Score } from "./Score";
 import { Link } from "expo-router";
 
-export function GameCard({ game }) {
+interface Game {
+  slug: string;
+  image: string;
+  title: string;
+  score: number;
+  description: string;
+}
+
+interface GameCardProps {
+  game: Game;
+}
+
+interface AnimatedGameCardProps {
+  game: Game;
+  index: number;
+}
+
+export function GameCard({ game }: GameCardProps) {
   return (
     <Link href={`/${game.slug}`} asChild>
       <Pressable className="active:opacity-70 border border-black active:border-white/50 mb-2 bg-gray-500/10 rounded-xl p-4">
@@ -31,7 +48,7 @@ export function GameCard({ game }) {
   );
 }
 
-export function AnimatedGameCard({ game, index }) {
+export function AnimatedGameCard({ game, index }: AnimatedGameCardProps) {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {

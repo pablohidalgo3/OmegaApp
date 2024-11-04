@@ -5,10 +5,13 @@ import { useEffect } from "react";
 
 export default function RootLayout() {
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setStatusBarStyle("dark");
-    }, 0);
+    }, 100); // Prueba con 100ms o 200ms para ver si mejora la consistencia
+  
+    return () => clearTimeout(timeoutId); // Limpia el timeout al desmontar el componente
   }, []);
+  
 
   return (
     <Stack>
@@ -16,4 +19,3 @@ export default function RootLayout() {
     </Stack>
   );
 }
-

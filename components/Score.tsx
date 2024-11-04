@@ -1,7 +1,12 @@
 import { View, Text } from "react-native";
 
-export function Score({ score, maxScore }) {
-  const getColor = () => {
+interface ScoreProps {
+  score: number;
+  maxScore: number;
+}
+
+export function Score({ score, maxScore }: ScoreProps) {
+  const getColor = (): string => {
     const percentage = (score / maxScore) * 100;
     if (percentage < 40) return "bg-red-500";
     if (percentage < 98) return "bg-yellow-500";

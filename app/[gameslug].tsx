@@ -1,30 +1,35 @@
 import { ActivityIndicator, Image, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { Screen } from "../components/Screen";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import { getGameDetails } from "../lib/metacritic";
 import { Score } from "../components/Score";
 
+interface GameInfo {
+  title: string;
+  img: string;
+  score: number;
+  description: string;
+}
+
 export default function Detail() {
   const { gameslug } = useLocalSearchParams();
-  const [gameInfo, setGameInfo] = useState(null);
+  const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
 
   useEffect(() => {
     if (gameslug) {
-      getGameDetails(gameslug).then(setGameInfo);
+      getGameDetails(gameslug as string).then(setGameInfo);
     }
   }, [gameslug]);
 
   return (
-    <Screen>
+    <View className="flex-1 bg-[#C8D9F0] pt-4 px-2">
       <Stack.Screen
         options={{
           headerStyle: { backgroundColor: "#C8D9F0" },
           headerShadowVisible: false,
           headerTintColor: "black",
           headerTitleAlign: "center",
-          headerLeft: () => {},
           headerTitle: () => (
             <Text
               style={{
@@ -39,7 +44,6 @@ export default function Detail() {
               {gameInfo === null ? "" : gameInfo.title}
             </Text>
           ),
-          headerRight: () => {},
         }}
       />
 
@@ -65,6 +69,6 @@ export default function Detail() {
           </ScrollView>
         )}
       </View>
-    </Screen>
+    </View>
   );
 }

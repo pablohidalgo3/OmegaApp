@@ -1,9 +1,8 @@
-import { ScrollView, Text } from "react-native";
-import { Screen } from "../../components/Screen";
+import { ScrollView, Text, View } from "react-native";
 
 export default function About() {
   return (
-    <Screen>
+    <View className="flex-1 bg-[#C8D9F0] pt-4 px-2">
       <ScrollView>
         <Text className="text-black font-bold mb-8 text-2xl">
           Sobre el proyecto
@@ -44,6 +43,6 @@ export default function About() {
           aliquip ex ea
         </Text>
       </ScrollView>
-    </Screen>
+    </View>
   );
 }
