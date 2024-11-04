@@ -1,15 +1,17 @@
 import "../global.css";
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarStyle } from "expo-status-bar";
 import { Stack } from "expo-router";
 import { View, useColorScheme } from "react-native";
 import { Logo } from "../components/Logo";
+import { useEffect } from "react";
 
 export default function Layout() {
 
-  const colorScheme = useColorScheme();
-  const DarkStatusBar = () => (
-    <StatusBar style='dark' />
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      setStatusBarStyle("dark");
+    }, 0);
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: 'black' }}>
@@ -22,8 +24,6 @@ export default function Layout() {
           headerLeft: () => <Logo />,
         }}
       />
-      {colorScheme === 'light' ? <DarkStatusBar /> : <DarkStatusBar />}
-      <StatusBar />
     </View>
   );
 }
