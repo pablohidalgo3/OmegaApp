@@ -42,7 +42,7 @@ const PlayersList: React.FC = () => {
           renderItem={({ item }) => (
             <Link href={`/${item.nickname}`} asChild>
               <Pressable // Navegación al detalle
-                className="flex-row items-center bg-[#92a2b8] mb-4 p-4 rounded-lg shadow-lg"
+                className="flex-row items-center bg-[#92a2c8] mb-4 p-4 rounded-lg shadow-lg"
               >
                 <Image
                   source={imageMap[item.img]}
