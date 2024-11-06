@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "G2 History",
-    "slug": "G2 History",
+    "slug": "G2History",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -31,6 +31,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3eeb805e-f435-46b2-9462-fba70b3cb455"
+      }
     }
   }
 }
