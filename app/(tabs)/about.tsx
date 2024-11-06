@@ -5,59 +5,38 @@ export default function About() {
     <View className="flex-1 bg-[#C8D9F0] pt-4 pb-2 px-3">
       <ScrollView className="bg-[#92a2c8] rounded-xl" showsVerticalScrollIndicator={false}>
         <Text className="text-black font-bold px-3 mt-4 mb-8 text-3xl">
-          Sobre el proyecto
+          About the Project
         </Text>
 
         <Text className="text-black px-3 mb-3 text-xl">
-          G2 Esports es una organización europea de deportes electrónicos
-          fundada el 24 de febrero de 2014 por el exjugador profesional Carlos
-          "ocelote" Rodríguez Santiago y el inversor Jens Hilgers.
+          G2 Esports is a European esports organization founded on February 24, 2014, by former professional player Carlos "Ocelote" Rodríguez Santiago and investor Jens Hilgers.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          Originalmente conocida como Gamers2, la organización cambió su nombre
-          a G2 Esports el 15 de octubre de 2015. Aunque sus raíces están en
-          España, G2 tiene su sede en Berlín, Alemania.
+          Originally known as Gamers2, the organization changed its name to G2 Esports on October 15, 2015. Although it has its roots in Spain, G2 is headquartered in Berlin, Germany.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          G2 Esports compite en múltiples títulos de videojuegos, incluyendo
-          League of Legends, Valorant, Counter-Strike 2, Hearthstone, Rocket
-          League, Rainbow Six Siege, Fortnite e iRacing.
+          G2 Esports competes in multiple video game titles, including League of Legends, Valorant, Counter-Strike 2, Hearthstone, Rocket League, Rainbow Six Siege, Fortnite, and iRacing.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          Su equipo de League of Legends participa en la League of Legends EMEA
-          Championship (LEC), la máxima competición europea del juego.
+          Its League of Legends team competes in the League of Legends EMEA Championship (LEC), the top European competition for the game.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          A lo largo de su trayectoria, G2 ha obtenido quince títulos nacionales
-          en Europa, siendo la organización más laureada en este ámbito. En
-          2019, se convirtieron en el único equipo occidental en ganar el
-          Mid-Season Invitational.
+          Throughout its history, G2 has won fifteen national titles in Europe, making it the most awarded organization in this field. In 2019, they became the only western team to win the Mid-Season Invitational.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          En Rainbow Six Siege, G2 compite en la European League (EUL), la
-          principal liga europea del juego.
+          In Rainbow Six Siege, G2 competes in the European League (EUL), the main European league for the game.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          El equipo ha ganado dos campeonatos mundiales: el primero en 2019 al
-          derrotar a Team Empire en la final del Six Invitational, y el segundo
-          en 2023 tras una destacada remontada en la fase de eliminación.
+          The team has won two world championships: the first in 2019 by defeating Team Empire in the Six Invitational final, and the second in 2023 after an impressive comeback in the elimination stage.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          Además de sus logros competitivos, G2 Esports es conocida por su
-          enfoque innovador y su capacidad para adaptarse a las tendencias
-          cambiantes en el mundo de los deportes electrónicos.
+          In addition to its competitive achievements, G2 Esports is known for its innovative approach and ability to adapt to changing trends in the world of esports.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          La organización ha establecido asociaciones con marcas reconocidas
-          como Logitech, Red Bull, AOC, Philips, Pringles, Mastercard, Lenovo,
-          Ralph Lauren, Metaplex, Spotify, Herman Miller y Next Level Racing, lo
-          que refleja su influencia y presencia en la industria.
+          The organization has established partnerships with well-known brands such as Logitech, Red Bull, AOC, Philips, Pringles, Mastercard, Lenovo, Ralph Lauren, Metaplex, Spotify, Herman Miller, and Next Level Racing, reflecting its influence and presence in the industry.
         </Text>
         <Text className="text-black px-3 mb-3 text-xl">
-          A lo largo de los años, G2 ha demostrado ser una fuerza dominante en
-          múltiples disciplinas de los deportes electrónicos, consolidándose
-          como una de las organizaciones más exitosas y respetadas a nivel
-          mundial.
+          Over the years, G2 has proven to be a dominant force in multiple esports disciplines, cementing itself as one of the most successful and respected organizations worldwide.
         </Text>
       </ScrollView>
     </View>

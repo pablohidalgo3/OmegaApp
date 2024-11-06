@@ -10,50 +10,9 @@ import {
 import { Link, useNavigation } from "expo-router";
 import playersData from "../../assets/players_data.json";
 import { currentRoster2024 } from "../../lib/imageMap";
-
-interface Player {
-  nickname: string; 
-  name: string;
-  country: string;
-  birthday: string;
-  age: number;
-  team: string;
-  position: string;
-  years: string;
-  img: string;
-}
-
-const positionOrder: Record<string, number> = {
-  Top: 1,
-  Jungler: 2,
-  Mid: 3,
-  Adc: 4,
-  Support: 5,
-};
-
-// Función para formatear los años en rangos consecutivos
-const formatYears = (years: string) => {
-  // Convertir a un array de números, eliminar duplicados y ordenar
-  const yearsArray = Array.from(new Set(years.split(", ").map(Number))).sort((a, b) => a - b);
-  const ranges = [];
-  let start = yearsArray[0];
-  let end = yearsArray[0];
-
-  for (let i = 1; i < yearsArray.length; i++) {
-    if (yearsArray[i] === end + 1) {
-      end = yearsArray[i];
-    } else {
-      // Agregar el rango anterior al resultado
-      ranges.push(start === end ? `${start}` : `${start}-${end}`);
-      start = yearsArray[i];
-      end = yearsArray[i];
-    }
-  }
-  // Agregar el último rango al resultado
-  ranges.push(start === end ? `${start}` : `${start}-${end}`);
-  
-  return ranges.join(" | ");
-};
+import { Player } from "../../interfaces/Player";
+import { formatYears } from "../../lib/formatYears";
+import { positionOrder } from "../../lib/positionOrder";
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);

@@ -11,62 +11,11 @@ import { Picker } from "@react-native-picker/picker";
 import { Link, useNavigation } from "expo-router";
 import playersData from "../../assets/players_data.json";
 import { imageMap } from "../../lib/imageMap";
-
-interface Player {
-  nickname: string;
-  name: string;
-  country: string;
-  birthday: string;
-  age: number;
-  team: string;
-  position: string;
-  years: string;
-  img: string;
-}
-
-const positionOrder: Record<string, number> = {
-  Top: 1,
-  Jungler: 2,
-  Mid: 3,
-  Adc: 4,
-  Support: 5,
-};
-
-const yearLabels: Record<string, string> = {
-  "2016.1": "2016 Spring",
-  "2016.2": "2016 Summer Regular",
-  "2016.3": "2016 Summer Playoffs",
-};
-
-// Rango de años desde 2016 hasta 2024
-const years = [
-  "2016.1",
-  "2016.2",
-  "2016.3",
-  ...Array.from({ length: 2024 - 2017 + 1 }, (_, i) => (2017 + i).toString()),
-];
-
-// Función para formatear los años en rangos consecutivos
-const formatYears = (years: string) => {
-  const yearsArray = Array.from(new Set(years.split(", ").map(Number))).sort(
-    (a, b) => a - b
-  );
-  const ranges = [];
-  let start = yearsArray[0];
-  let end = yearsArray[0];
-
-  for (let i = 1; i < yearsArray.length; i++) {
-    if (yearsArray[i] === end + 1) {
-      end = yearsArray[i];
-    } else {
-      ranges.push(start === end ? `${start}` : `${start}-${end}`);
-      start = yearsArray[i];
-      end = yearsArray[i];
-    }
-  }
-  ranges.push(start === end ? `${start}` : `${start}-${end}`);
-  return ranges.join(" | ");
-};
+import { Player } from "../../interfaces/Player";
+import { formatYears } from "../../lib/formatYears";
+import { positionOrder } from "../../lib/positionOrder";
+import { years } from "../../lib/years";
+import { yearLabels } from "../../lib/yearLabels";
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);

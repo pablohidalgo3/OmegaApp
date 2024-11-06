@@ -4,22 +4,13 @@ import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import playersData from "../assets/players_data.json";
 import { imageMap } from "@/lib/imageMap";
-
-interface PlayerInfo {
-  nickname: string;
-  name: string;
-  country: string;
-  birthday: string;
-  age: number;
-  team: string;
-  position: string;
-  years: string;
-  img: string;
-}
+import g2logo from "../assets/images/g2logo.png";
+import { Player } from "../interfaces/Player";
+import { formatYears } from "@/lib/formatYears"; // Asegúrate de tener este import configurado correctamente
 
 export default function PlayerDetail() {
   const { nickname } = useLocalSearchParams(); // usa 'nickname' en lugar de 'playerid'
-  const [playerInfo, setPlayerInfo] = useState<PlayerInfo | null>(null);
+  const [playerInfo, setPlayerInfo] = useState<Player | null>(null);
 
   useEffect(() => {
     if (nickname) {
@@ -59,26 +50,64 @@ export default function PlayerDetail() {
         ) : (
           <ScrollView>
             <View className="justify-center items-center text-center">
-              <Image
-                className="mb-4 rounded"
-                source={imageMap[playerInfo.img]}
-                style={{ width: 214, height: 294 }}
-              />
-              <Text className="text-black text-center font-bold text-xl">
+              <View className="relative w-[260px] h-[310px] mb-4">
+                {/* Imagen de fondo, con un ancho ligeramente más grande */}
+                <Image
+                  source={g2logo}
+                  style={{
+                    position: "absolute",
+                    width: 260,
+                    height: 300, // Altura ligeramente aumentada
+                    left: "50%", // Centra horizontalmente
+                    top: "50%", // Centra verticalmente
+                    transform: [{ translateX: -130 }, { translateY: -154 }], // Ajusta el valor de translateY basado en el nuevo alto
+                    borderRadius: 10,
+                    opacity: 0.4, // Ajusta la opacidad para dar un efecto de fondo transparentado
+                    resizeMode: "cover",
+                  }}
+                />
+
+                {/* Imagen principal, mantiene el tamaño original */}
+                <Image
+                  source={imageMap[playerInfo.img]}
+                  style={{
+                    width: 214,
+                    height: 294,
+                    borderRadius: 10,
+                    resizeMode: "contain",
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    transform: [{ translateX: -107 }, { translateY: -147 }],
+                  }}
+                />
+              </View>
+
+              <Text className="text-black text-center font-bold text-2xl">
                 {playerInfo.name}
               </Text>
-              <Text className="text-black/70 mt-4 text-left mb-8 text-base">
-                País: {playerInfo.country}
-              </Text>
-              <Text className="text-black/70 mt-2 text-left text-base">
-                Equipo: {playerInfo.team}
-              </Text>
-              <Text className="text-black/70 mt-2 text-left text-base">
-                Posición: {playerInfo.position}
-              </Text>
-              <Text className="text-black/70 mt-2 text-left text-base">
-                Años jugados: {playerInfo.years}
-              </Text>
+
+              <View className="bg-[#92a2c8] shadow-md rounded-lg p-4 mt-4 w-11/12">
+                <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  Country:
+                </Text>
+                <Text className="text-slate-950 text-base mb-4">
+                  {playerInfo.country}
+                </Text>
+                <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  Position:
+                </Text>
+                <Text className="text-slate-950 text-base mb-4">
+                  {playerInfo.position}
+                </Text>
+
+                <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  Years Played:
+                </Text>
+                <Text className="text-slate-950 text-base">
+                  {formatYears(playerInfo.years)}
+                </Text>
+              </View>
             </View>
           </ScrollView>
         )}
