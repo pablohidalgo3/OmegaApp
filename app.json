@@ -2,7 +2,7 @@
   "expo": {
     "name": "G2 History",
     "slug": "G2 History",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -19,8 +19,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.omega9937.StickerSmash"
+      }
     },
     "web": {
       "bundler": "metro",
@@ -32,11 +31,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "83f55a8a-eccd-4a79-a7fc-fbc3f3e95774"
-      }
     }
   }
 }
