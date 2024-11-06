@@ -91,7 +91,7 @@ const PlayersList: React.FC = () => {
                   resizeMode="center"
                 />
                 <View className="flex-1">
-                  <Text className="text-4xl font-bold mb-1">{item.nickname}</Text>
+                  <Text className="text-3xl font-bold mb-1">{item.nickname}</Text>
                   <Text className="text-xl text-slate-950">{item.name}</Text>
                   <Text className="text-xl text-slate-950">{item.country}</Text>
                   <Text className="text-xl text-slate-950">{item.position}</Text>

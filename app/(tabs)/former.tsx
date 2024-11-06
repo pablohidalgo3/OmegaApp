@@ -90,12 +90,17 @@ const PlayersList: React.FC = () => {
     // Cambiar el headerRight con el año seleccionado
     navigation.setOptions({
       headerRight: () => (
-        <Text className="text-slate-950 font-bold text-2xl me-3">
+        <Text
+          className={`text-slate-950 font-bold ${
+            selectedYear === "2016.2" || selectedYear === "2016.3" ? "text-xl" : "text-2xl"
+          } me-3`}
+        >
           {yearLabels[selectedYear] || selectedYear} Roster
         </Text>
       ),
     });
   }, [navigation, selectedYear]);
+  
 
   return (
     <View className="flex-1 bg-[#C8D9F0] pt-8 px-2">
@@ -131,7 +136,7 @@ const PlayersList: React.FC = () => {
                   resizeMode="center"
                 />
                 <View className="flex-1">
-                  <Text className="text-4xl font-bold mb-1">
+                  <Text className="text-3xl font-bold mb-1">
                     {item.nickname}
                   </Text>
                   <Text className="text-xl text-slate-950">{item.name}</Text>

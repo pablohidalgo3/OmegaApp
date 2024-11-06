@@ -43,7 +43,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color }) => <HomeIcon color={color} />,
           headerRight: () => (
-            <Text className="text-slate-950 font-bold text-3xl me-3">2024 Roster</Text>
+            <Text className="text-slate-950 font-bold text-2xl me-3">2024 Roster</Text>
           ),
         }}
       />
@@ -54,7 +54,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color }) => <FormerIcon color={color} />,
           headerRight: () => (
-            <Text className="text-slate-950 font-bold text-3xl me-3">{selectedYear}</Text>
+            <Text className="text-slate-950 font-bold text-xl me-3">{selectedYear}</Text>
           ),
         }}
         listeners={{
@@ -71,7 +71,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color }) => <InfoIcon color={color} />,
           headerRight: () => (
-            <Text className="text-slate-950 font-bold text-3xl me-3">About</Text>
+            <Text className="text-slate-950 font-bold text-2xl me-3">About</Text>
           ),
         }}
       />
