@@ -3,7 +3,7 @@ import { useLocalSearchParams } from "expo-router";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import playersData from "../assets/players_data.json";
-import imageMap from "@/lib/imageMap";
+import { imageMap } from "@/lib/imageMap";
 
 interface PlayerInfo {
   nickname: string;

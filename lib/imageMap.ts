@@ -19,6 +19,7 @@ import wunder from "../assets/images/wunder.webp";
 import yike from "../assets/images/yike.webp";
 import zven from "../assets/images/zven.webp";
 
+// Todos los jugadores
 const imageMap: { [key: string]: any } = {
   "brokenblade.webp": brokenblade,
   "caps.webp": caps,
@@ -42,4 +43,14 @@ const imageMap: { [key: string]: any } = {
   "zven.webp": zven,
 };
 
-export default imageMap;
+// Roster actual (2024)
+const currentRoster2024: { [key: string]: any } = {
+  "brokenblade.webp": brokenblade,
+  "caps.webp": caps,
+  "flakked.webp": flakked,
+  "hanssama.webp": hanssama,
+  "mikyx.webp": mikyx,
+  "yike.webp": yike,
+};
+
+export { imageMap, currentRoster2024 };

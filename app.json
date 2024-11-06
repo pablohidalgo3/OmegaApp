@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "OmegaApp",
-    "slug": "OmegaApp",
-    "version": "1.0.0",
+    "name": "G2 History",
+    "slug": "G2 History",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
