@@ -7,6 +7,7 @@ import { imageMap } from "@/lib/imageMap";
 import g2logo from "../assets/images/g2logo.png";
 import { Player } from "../interfaces/Player";
 import { formatYears } from "@/lib/formatYears"; // Asegúrate de tener este import configurado correctamente
+import { Platform } from "react-native";
 
 export default function PlayerDetail() {
   const { nickname } = useLocalSearchParams(); // usa 'nickname' en lugar de 'playerid'
@@ -49,7 +50,7 @@ export default function PlayerDetail() {
         {playerInfo === null ? (
           <ActivityIndicator color={"#000"} size={"large"} />
         ) : (
-          <ScrollView>
+          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
             <View className="justify-center items-center text-center">
               <View className="relative w-[260px] h-[310px] mb-4">
                 {/* Imagen de fondo, con un ancho ligeramente más grande */}
@@ -88,7 +89,19 @@ export default function PlayerDetail() {
                 {playerInfo.name}
               </Text>
 
-              <View className="bg-[#92a2c8] shadow-md rounded-lg p-4 mt-4 w-11/12">
+              <View className="bg-[#92a2c8] shadow-md rounded-lg p-4 mt-4 w-11/12" style={{
+                  ...Platform.select({
+                    ios: {
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.1, // Reduce la opacidad de la sombra para iOS
+                      shadowRadius: 3,
+                    },
+                    android: {
+                      elevation: 4, // Mantén o ajusta la elevación para Android
+                    },
+                  }),
+                }}>
                 <Text className="text-slate-950 font-semibold text-lg mb-2">
                   Country:
                 </Text>

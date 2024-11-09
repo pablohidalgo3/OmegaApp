@@ -135,7 +135,22 @@ const PlayersList: React.FC = () => {
           keyExtractor={(player) => player.nickname}
           renderItem={({ item }) => (
             <Link href={`/${item.nickname}`} asChild>
-              <Pressable className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg shadow-lg">
+              <Pressable
+                className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg"
+                style={{
+                  ...Platform.select({
+                    ios: {
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.1, // Reduce la opacidad de la sombra para iOS
+                      shadowRadius: 3,
+                    },
+                    android: {
+                      elevation: 4, // Mantén o ajusta la elevación para Android
+                    },
+                  }),
+                }}
+              >
                 <Image
                   source={imageMap[item.img]}
                   className="w-48 h-48 rounded-full mr-4"
