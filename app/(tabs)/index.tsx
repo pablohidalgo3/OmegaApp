@@ -13,6 +13,7 @@ import { currentRoster2024 } from "../../lib/imageMap";
 import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
+import { Platform } from "react-native";
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -41,8 +42,21 @@ const PlayersList: React.FC = () => {
           keyExtractor={(player) => player.nickname}
           renderItem={({ item }) => (
             <Link href={`/${item.nickname}`} asChild>
-              <Pressable // Navegación al detalle
-                className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg shadow-lg"
+              <Pressable
+                className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg"
+                style={{
+                  ...Platform.select({
+                    ios: {
+                      shadowColor: "#000",
+                      shadowOffset: { width: 0, height: 2 },
+                      shadowOpacity: 0.1, // Reduce la opacidad de la sombra para iOS
+                      shadowRadius: 3,
+                    },
+                    android: {
+                      elevation: 4, // Mantén o ajusta la elevación para Android
+                    },
+                  }),
+                }}
               >
                 <Image
                   source={currentRoster2024[item.img]}
@@ -50,11 +64,17 @@ const PlayersList: React.FC = () => {
                   resizeMode="center"
                 />
                 <View className="flex-1">
-                  <Text className="text-3xl font-bold mb-1">{item.nickname}</Text>
+                  <Text className="text-3xl font-bold mb-1">
+                    {item.nickname}
+                  </Text>
                   <Text className="text-xl text-slate-950">{item.name}</Text>
                   <Text className="text-xl text-slate-950">{item.country}</Text>
-                  <Text className="text-xl text-slate-950">{item.position}</Text>
-                  <Text className="text-xl text-slate-950">Age: {item.age}</Text>
+                  <Text className="text-xl text-slate-950">
+                    {item.position}
+                  </Text>
+                  <Text className="text-xl text-slate-950">
+                    Age: {item.age}
+                  </Text>
                   <Text className="text-xl text-slate-950">
                     Years: {formatYears(item.years)}
                   </Text>

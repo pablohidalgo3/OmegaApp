@@ -27,6 +27,7 @@ export default function PlayerDetail() {
           headerShadowVisible: false,
           headerTintColor: "black",
           headerTitleAlign: "center",
+          headerBackTitleVisible: false, // Oculta el texto de retorno en iOS
           headerTitle: () => (
             <Text
               style={{

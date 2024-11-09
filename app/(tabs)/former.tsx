@@ -6,8 +6,10 @@ import {
   Text,
   Image,
   Pressable,
+  Modal,
+  TouchableOpacity,
+  Platform,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { Link, useNavigation } from "expo-router";
 import playersData from "../../assets/players_data.json";
 import { imageMap } from "../../lib/imageMap";
@@ -16,10 +18,12 @@ import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { years } from "../../lib/years";
 import { yearLabels } from "../../lib/yearLabels";
+import { Picker } from "@react-native-picker/picker";
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [selectedYear, setSelectedYear] = useState<string>("2016.1");
+  const [isModalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -41,7 +45,9 @@ const PlayersList: React.FC = () => {
       headerRight: () => (
         <Text
           className={`text-slate-950 font-bold ${
-            selectedYear === "2016.2" || selectedYear === "2016.3" ? "text-xl" : "text-2xl"
+            selectedYear === "2016.2" || selectedYear === "2016.3"
+              ? "text-xl"
+              : "text-2xl"
           } me-3`}
         >
           {yearLabels[selectedYear] || selectedYear} Roster
@@ -49,25 +55,76 @@ const PlayersList: React.FC = () => {
       ),
     });
   }, [navigation, selectedYear]);
-  
 
   return (
     <View className="flex-1 bg-[#C8D9F0] pt-8 px-2">
       {/* Selector de año */}
       <View className="mb-6 mx-5 bg-[#92a2c8] rounded-lg">
-        <Picker
-          selectedValue={selectedYear}
-          onValueChange={(year) => setSelectedYear(year)}
-          className="px-4 py-2 text-center rounded-lg"
-        >
-          {years.map((year) => (
-            <Picker.Item
-              key={year}
-              label={yearLabels[year] || year}
-              value={year}
-            />
-          ))}
-        </Picker>
+        {Platform.OS === "ios" ? (
+          <>
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
+              className="px-4 py-2 text-center bg-[#92a2c8] rounded-lg"
+            >
+              <Text className="text-center text-white">
+                {yearLabels[selectedYear] || selectedYear}
+              </Text>
+            </TouchableOpacity>
+            <Modal
+              transparent={true}
+              visible={isModalVisible}
+              animationType="slide"
+            >
+              <View className="flex-1 justify-center items-center bg-black/50">
+                <View className="bg-white w-4/5 rounded-lg p-4">
+                  <FlatList
+                    data={years}
+                    keyExtractor={(item) => item}
+                    renderItem={({ item }) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setSelectedYear(item);
+                          setModalVisible(false);
+                        }}
+                        className="py-2"
+                      >
+                        <Text
+                          className={`text-center text-lg ${
+                            selectedYear === item
+                              ? "font-bold text-blue-600"
+                              : "text-black"
+                          }`}
+                        >
+                          {yearLabels[item] || item}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setModalVisible(false)}
+                    className="mt-4 p-2 bg-blue-600 rounded-lg"
+                  >
+                    <Text className="text-center text-white">Close</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+          </>
+        ) : (
+          <Picker
+            selectedValue={selectedYear}
+            onValueChange={(year) => setSelectedYear(year)}
+            className="px-4 py-2 text-center rounded-lg"
+          >
+            {years.map((year) => (
+              <Picker.Item
+                key={year}
+                label={yearLabels[year] || year}
+                value={year}
+              />
+            ))}
+          </Picker>
+        )}
       </View>
 
       {players.length === 0 ? (
