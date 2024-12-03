@@ -238,7 +238,7 @@ const PlayersList: React.FC = () => {
                       "brokenblade",
                       "yike",
                       "caps",
-                      "hanssama",
+                      "hans sama",
                       "mikyx",
                     ].includes(item.nickname.toLowerCase())
                       ? "center"

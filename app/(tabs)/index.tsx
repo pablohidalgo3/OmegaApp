@@ -14,7 +14,7 @@ import { positionOrder } from "../../lib/positionOrder";
 import { Platform } from "react-native";
 
 const API_URL = "https://g2historyapi.vercel.app/players"; // Cambia esto si la API está desplegada en un servidor remoto
-
+const currentYear = new Date().getFullYear().toString();
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,7 +32,7 @@ const PlayersList: React.FC = () => {
 
         // Filtrar y ordenar los jugadores
         const filteredPlayers = data
-          .filter((player) => player.years.includes("2024"))
+          .filter((player) => player.years.includes(currentYear))
           .sort(
             (a, b) =>
               (positionOrder[a.position as keyof typeof positionOrder] || 999) -
