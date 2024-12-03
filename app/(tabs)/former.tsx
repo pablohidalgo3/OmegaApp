@@ -11,32 +11,97 @@ import {
   Platform,
 } from "react-native";
 import { Link, useNavigation } from "expo-router";
-import playersData from "../../assets/players_data.json";
-import { imageMap } from "../../lib/imageMap";
 import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
-import { years } from "../../lib/years";
-import { yearLabels } from "../../lib/yearLabels";
 import { Picker } from "@react-native-picker/picker";
+
+const PLAYERS_API_URL = "https://g2historyapi.vercel.app/players"; // URL para jugadores
+const YEARS_API_URL = "https://g2historyapi.vercel.app/years"; // URL para años
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
-  const [selectedYear, setSelectedYear] = useState<string>("2016.1");
+  const [years, setYears] = useState<
+    { year_identifier: string; label: string }[]
+  >([]);
+  const [selectedYear, setSelectedYear] = useState<string>("");
   const [isModalVisible, setModalVisible] = useState(false);
+  const [loadingPlayers, setLoadingPlayers] = useState<boolean>(true);
+  const [loadingYears, setLoadingYears] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const navigation = useNavigation();
 
   useEffect(() => {
-    // Filtrar jugadores por año y ordenar por posición
-    const filteredPlayers = playersData
-      .filter((player) => player.years.includes(selectedYear))
-      .sort(
-        (a, b) =>
-          (positionOrder[a.position as keyof typeof positionOrder] || 999) -
-          (positionOrder[b.position as keyof typeof positionOrder] || 999)
-      );
+    // Obtener años desde la API
+    const fetchYears = async () => {
+      setLoadingYears(true);
+      try {
+        const response = await fetch(YEARS_API_URL);
+        if (!response.ok) {
+          throw new Error("Error al obtener los años");
+        }
+        const data = await response.json();
+        setYears(data);
+        if (data.length > 0) {
+          setSelectedYear(data[0].year_identifier); // Selecciona el primer año como predeterminado
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoadingYears(false);
+      }
+    };
 
-    setPlayers(filteredPlayers);
+    fetchYears();
+  }, []);
+
+  useEffect(() => {
+    // Obtener jugadores desde la API según el año seleccionado
+    if (!selectedYear) return;
+
+    const fetchPlayers = async () => {
+      setLoadingPlayers(true);
+      setError(null);
+
+      try {
+        const response = await fetch(PLAYERS_API_URL);
+        if (!response.ok) {
+          throw new Error("Error al obtener los jugadores");
+        }
+
+        const data: Player[] = await response.json();
+
+        // Filtrar jugadores por año
+        const filteredPlayers = data.filter((player) =>
+          player.years.includes(selectedYear)
+        );
+
+        // Ordenar jugadores por posición
+        const sortedPlayers = filteredPlayers.sort((a, b) => {
+          const orderA =
+            positionOrder[a.position as keyof typeof positionOrder] || 999;
+          const orderB =
+            positionOrder[b.position as keyof typeof positionOrder] || 999;
+          return orderA - orderB;
+        });
+
+        setPlayers(sortedPlayers);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoadingPlayers(false);
+      }
+    };
+
+    fetchPlayers();
   }, [selectedYear]);
 
   useLayoutEffect(() => {
@@ -50,85 +115,99 @@ const PlayersList: React.FC = () => {
               : "text-2xl"
           } me-3`}
         >
-          {yearLabels[selectedYear] || selectedYear} Roster
+          {years.find((y) => y.year_identifier === selectedYear)?.label || ""}{" "}
+          Roster
         </Text>
       ),
     });
-  }, [navigation, selectedYear]);
+  }, [navigation, selectedYear, years]);
 
   return (
     <View className="flex-1 bg-[#C8D9F0] pt-8 px-2">
       {/* Selector de año */}
-      <View className="mb-6 mx-5 bg-[#92a2c8] rounded-lg">
-        {Platform.OS === "ios" ? (
-          <>
-            <TouchableOpacity
-              onPress={() => setModalVisible(true)}
-              className="px-4 py-2 text-center bg-[#92a2c8] rounded-lg"
-            >
-              <Text className="text-center text-white">
-                {yearLabels[selectedYear] || selectedYear}
-              </Text>
-            </TouchableOpacity>
-            <Modal
-              transparent={true}
-              visible={isModalVisible}
-              animationType="slide"
-            >
-              <View className="flex-1 justify-center items-center bg-black/50">
-                <View className="bg-white w-4/5 rounded-lg p-4">
-                  <FlatList
-                    data={years}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        onPress={() => {
-                          setSelectedYear(item);
-                          setModalVisible(false);
-                        }}
-                        className="py-2"
-                      >
-                        <Text
-                          className={`text-center text-lg ${
-                            selectedYear === item
-                              ? "font-bold text-blue-600"
-                              : "text-black"
-                          }`}
-                        >
-                          {yearLabels[item] || item}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(false)}
-                    className="mt-4 p-2 bg-blue-600 rounded-lg"
-                  >
-                    <Text className="text-center text-white">Close</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Modal>
-          </>
-        ) : (
-          <Picker
-            selectedValue={selectedYear}
-            onValueChange={(year) => setSelectedYear(year)}
-            className="px-4 py-2 text-center rounded-lg"
-          >
-            {years.map((year) => (
-              <Picker.Item
-                key={year}
-                label={yearLabels[year] || year}
-                value={year}
-              />
-            ))}
-          </Picker>
-        )}
-      </View>
-
-      {players.length === 0 ? (
+      {loadingYears ? (
         <ActivityIndicator color={"#000"} size={"large"} />
+      ) : (
+        <View className="mb-6 mx-5 bg-[#92a2c8] rounded-lg">
+          {Platform.OS === "ios" ? (
+            <>
+              <TouchableOpacity
+                onPress={() => setModalVisible(true)}
+                className="px-4 py-2 text-center bg-[#92a2c8] rounded-lg"
+              >
+                <Text className="text-center text-white">
+                  {years.find((y) => y.year_identifier === selectedYear)
+                    ?.label || ""}
+                </Text>
+              </TouchableOpacity>
+              <Modal
+                transparent={true}
+                visible={isModalVisible}
+                animationType="slide"
+              >
+                <View className="flex-1 justify-center items-center bg-black/50">
+                  <View className="bg-white w-4/5 rounded-lg p-4">
+                    <FlatList
+                      data={years}
+                      keyExtractor={(item) => item.year_identifier}
+                      renderItem={({ item }) => (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setSelectedYear(item.year_identifier);
+                            setModalVisible(false);
+                          }}
+                          className="py-2"
+                        >
+                          <Text
+                            className={`text-center text-lg ${
+                              selectedYear === item.year_identifier
+                                ? "font-bold text-blue-600"
+                                : "text-black"
+                            }`}
+                          >
+                            {item.label}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                    <TouchableOpacity
+                      onPress={() => setModalVisible(false)}
+                      className="mt-4 p-2 bg-blue-600 rounded-lg"
+                    >
+                      <Text className="text-center text-white">Close</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </>
+          ) : (
+            <Picker
+              selectedValue={selectedYear}
+              onValueChange={(year) => setSelectedYear(year)}
+              className="px-4 py-2 text-center rounded-lg"
+            >
+              {years.map((year) => (
+                <Picker.Item
+                  key={year.year_identifier}
+                  label={year.label}
+                  value={year.year_identifier}
+                />
+              ))}
+            </Picker>
+          )}
+        </View>
+      )}
+
+      {loadingPlayers ? (
+        <ActivityIndicator color={"#000"} size={"large"} />
+      ) : error ? (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-xl text-red-500">{error}</Text>
+        </View>
+      ) : players.length === 0 ? (
+        <View className="flex-1 justify-center items-center">
+          <Text className="text-xl text-slate-950">No players found</Text>
+        </View>
       ) : (
         <FlatList
           data={players}
@@ -152,9 +231,19 @@ const PlayersList: React.FC = () => {
                 }}
               >
                 <Image
-                  source={imageMap[item.img]}
+                  source={{ uri: item.img }} // Imagen desde la API
                   className="w-48 h-48 rounded-full mr-4"
-                  resizeMode="center"
+                  resizeMode={
+                    [
+                      "brokenblade",
+                      "yike",
+                      "caps",
+                      "hanssama",
+                      "mikyx",
+                    ].includes(item.nickname.toLowerCase())
+                      ? "center"
+                      : "cover"
+                  }
                 />
                 <View className="flex-1">
                   <Text className="text-3xl font-bold mb-1">
