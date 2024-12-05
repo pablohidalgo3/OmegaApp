@@ -13,7 +13,7 @@ import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { Platform } from "react-native";
 
-const API_URL = "https://g2historyapi.vercel.app/players"; // Cambia esto si la API está desplegada en un servidor remoto
+const API_URL = "https://g2historyapi.vercel.app/players/year"; // Cambia esto si la API está desplegada en un servidor remoto
 const currentYear = new Date().getFullYear().toString();
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -24,22 +24,20 @@ const PlayersList: React.FC = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(API_URL + "/" + currentYear);
         if (!response.ok) {
           throw new Error("Error al obtener los jugadores");
         }
         const data: Player[] = await response.json();
 
         // Filtrar y ordenar los jugadores
-        const filteredPlayers = data
-          .filter((player) => player.years.includes(currentYear))
-          .sort(
-            (a, b) =>
-              (positionOrder[a.position as keyof typeof positionOrder] || 999) -
-              (positionOrder[b.position as keyof typeof positionOrder] || 999)
-          );
+        const orderedPlayers = data.sort(
+          (a, b) =>
+            (positionOrder[a.position as keyof typeof positionOrder] || 999) -
+            (positionOrder[b.position as keyof typeof positionOrder] || 999)
+        );
 
-        setPlayers(filteredPlayers);
+        setPlayers(orderedPlayers);
       } catch (err) {
         if (err instanceof Error) {
           setError(err.message);
@@ -56,7 +54,10 @@ const PlayersList: React.FC = () => {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center" style={{ backgroundColor: "#C8D9F0" }}>
+      <View
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: "#C8D9F0" }}
+      >
         <ActivityIndicator color={"#000"} size={"large"} />
       </View>
     );
@@ -64,7 +65,10 @@ const PlayersList: React.FC = () => {
 
   if (error) {
     return (
-      <View className="flex-1 justify-center items-center" style={{ backgroundColor: "#C8D9F0" }}>
+      <View
+        className="flex-1 justify-center items-center"
+        style={{ backgroundColor: "#C8D9F0" }}
+      >
         <Text className="text-xl text-red-500">{error}</Text>
       </View>
     );
@@ -99,17 +103,11 @@ const PlayersList: React.FC = () => {
                 resizeMode="center"
               />
               <View className="flex-1">
-                <Text className="text-3xl font-bold mb-1">
-                  {item.nickname}
-                </Text>
+                <Text className="text-3xl font-bold mb-1">{item.nickname}</Text>
                 <Text className="text-xl text-slate-950">{item.name}</Text>
                 <Text className="text-xl text-slate-950">{item.country}</Text>
-                <Text className="text-xl text-slate-950">
-                  {item.position}
-                </Text>
-                <Text className="text-xl text-slate-950">
-                  Age: {item.age}
-                </Text>
+                <Text className="text-xl text-slate-950">{item.position}</Text>
+                <Text className="text-xl text-slate-950">Age: {item.age}</Text>
                 <Text className="text-xl text-slate-950">
                   Years: {formatYears(item.years)}
                 </Text>
