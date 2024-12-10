@@ -7,19 +7,18 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import { Link, useNavigation } from "expo-router";
+import { Link } from "expo-router";
 import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
-import { Platform } from "react-native";
 
-const API_URL = "https://g2historyapi-production.up.railway.app/players/year"; // Cambia esto si la API está desplegada en un servidor remoto
+const API_URL = "https://g2historyapi-production.up.railway.app/players/year";
 const currentYear = new Date().getFullYear().toString();
+
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -30,7 +29,7 @@ const PlayersList: React.FC = () => {
         }
         const data: Player[] = await response.json();
 
-        // Filtrar y ordenar los jugadores
+        // Ordenar los jugadores por posición
         const orderedPlayers = data.sort(
           (a, b) =>
             (positionOrder[a.position as keyof typeof positionOrder] || 999) -
@@ -39,11 +38,7 @@ const PlayersList: React.FC = () => {
 
         setPlayers(orderedPlayers);
       } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
+        setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
         setLoading(false);
       }
@@ -54,68 +49,80 @@ const PlayersList: React.FC = () => {
 
   if (loading) {
     return (
-      <View
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "#C8D9F0" }}
-      >
-        <ActivityIndicator color={"#000"} size={"large"} />
+      <View className="flex-1 justify-center items-center bg-[#111111]">
+        <ActivityIndicator color="#fff" size="large" />
       </View>
     );
   }
 
   if (error) {
     return (
-      <View
-        className="flex-1 justify-center items-center"
-        style={{ backgroundColor: "#C8D9F0" }}
-      >
-        <Text className="text-xl text-red-500">{error}</Text>
+      <View className="flex-1 justify-center items-center bg-[#111111]">
+        <Text className="text-xl text-[#FF4655]">{error}</Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-[#C8D9F0] pt-4 px-2 justify-center">
+    <View className="flex-1 bg-[#111111] pt-4 px-2">
       <FlatList
         data={players}
         keyExtractor={(player) => player.nickname}
         renderItem={({ item }) => (
           <Link href={`/${item.nickname}`} asChild>
             <Pressable
-              className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg"
+              className="bg-[#262424] mb-6 rounded-3xl shadow-lg overflow-hidden"
               style={{
-                ...Platform.select({
-                  ios: {
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.1,
-                    shadowRadius: 3,
-                  },
-                  android: {
-                    elevation: 4,
-                  },
-                }),
+                padding: 16,
+                marginHorizontal: 16,
+                elevation: 5,
               }}
             >
-              <Image
-                source={{ uri: item.img }} // Cambiado para usar la URL desde la API
-                className="w-48 h-48 rounded-full mr-4"
-                resizeMode="center"
-              />
-              <View className="flex-1">
-                <Text className="text-3xl font-bold mb-1">{item.nickname}</Text>
-                <Text className="text-xl text-slate-950">{item.name}</Text>
-                <Text className="text-xl text-slate-950">{item.country}</Text>
-                <Text className="text-xl text-slate-950">{item.position}</Text>
-                <Text className="text-xl text-slate-950">Age: {item.age}</Text>
-                <Text className="text-xl text-slate-950">
-                  Years: {formatYears(item.years)}
+              {/* Contenedor con texto del rol en el fondo */}
+              <View className="relative w-full h-48 mb-4">
+                {/* Texto del rol en grande */}
+                <Text
+                  className={`absolute ${
+                    ["top", "mid", "adc"].includes(item.position.toLowerCase())
+                      ? "text-9xl"
+                      : "text-7xl"
+                  } font-extrabold text-[#FF4655] w-full text-center`}
+                  style={{
+                    top: "50%",
+                    transform: [{ translateY: -32 }], // Ajuste para centrar verticalmente
+                    zIndex: 1,
+                  }}
+                >
+                  {item.position.toUpperCase()}
+                </Text>
+
+                {/* Foto del jugador */}
+                <Image
+                  source={{ uri: item.img }}
+                  className="w-full h-full object-cover"
+                  style={{ position: "absolute", zIndex: 2 }}
+                  resizeMode="contain"
+                />
+              </View>
+
+              {/* Información del jugador */}
+              <View className="flex-col items-start">
+                <Text className="text-3xl font-bold text-[#ffffff]">
+                  {item.nickname}
+                </Text>
+                <Text className="text-lg text-[#c9c9c9]">{item.name}</Text>
+                <Text className="text-lg text-[#c9c9c9]">
+                  {item.country} | {item.position}
+                </Text>
+                <Text className="text-sm text-[#7d7d7d]">
+                  Age: {item.age} | Years: {formatYears(item.years)}
                 </Text>
               </View>
             </Pressable>
           </Link>
         )}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 70 }}
       />
     </View>
   );

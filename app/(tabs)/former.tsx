@@ -109,7 +109,7 @@ const PlayersList: React.FC = () => {
     navigation.setOptions({
       headerRight: () => (
         <Text
-          className={`text-slate-950 font-bold ${
+          className={`text-white font-bold mb-1 ${
             selectedYear === "2016.2" || selectedYear === "2016.3"
               ? "text-xl"
               : "text-2xl"
@@ -123,12 +123,12 @@ const PlayersList: React.FC = () => {
   }, [navigation, selectedYear, years]);
 
   return (
-    <View className="flex-1 bg-[#C8D9F0] pt-8 px-2">
+    <View className="flex-1 bg-[#111111] pt-8 px-2">
       {/* Selector de año */}
       {loadingYears ? (
-        <ActivityIndicator color={"#000"} size={"large"} />
+        <ActivityIndicator color={"#fff"} size={"large"} />
       ) : (
-        <View className="mb-6 mx-5 bg-[#92a2c8] rounded-lg">
+        <View className="mb-6 mx-5 bg-[#fff] rounded-lg">
           {Platform.OS === "ios" ? (
             <>
               <TouchableOpacity
@@ -199,7 +199,7 @@ const PlayersList: React.FC = () => {
       )}
 
       {loadingPlayers ? (
-        <ActivityIndicator color={"#000"} size={"large"} />
+        <ActivityIndicator color={"#fff"} size={"large"} />
       ) : error ? (
         <View className="flex-1 justify-center items-center">
           <Text className="text-xl text-red-500">{error}</Text>
@@ -210,62 +210,64 @@ const PlayersList: React.FC = () => {
         </View>
       ) : (
         <FlatList
-          data={players}
-          keyExtractor={(player) => player.nickname}
-          renderItem={({ item }) => (
-            <Link href={`/${item.nickname}`} asChild>
-              <Pressable
-                className="flex-row items-center bg-[#92a2c8] mb-4 p-2 rounded-lg"
-                style={{
-                  ...Platform.select({
-                    ios: {
-                      shadowColor: "#000",
-                      shadowOffset: { width: 0, height: 2 },
-                      shadowOpacity: 0.1, // Reduce la opacidad de la sombra para iOS
-                      shadowRadius: 3,
-                    },
-                    android: {
-                      elevation: 4, // Mantén o ajusta la elevación para Android
-                    },
-                  }),
-                }}
-              >
+        data={players}
+        keyExtractor={(player) => player.nickname}
+        renderItem={({ item }) => (
+          <Link href={`/${item.nickname}`} asChild>
+            <Pressable
+              className="bg-[#262424] mb-6 rounded-3xl shadow-lg overflow-hidden"
+              style={{
+                padding: 16,
+                marginHorizontal: 16,
+                elevation: 5,
+              }}
+            >
+              {/* Contenedor con texto del rol en el fondo */}
+              <View className="relative w-full h-48 mb-4">
+                {/* Texto del rol en grande */}
+                <Text
+                  className={`absolute ${
+                    ["top", "mid", "adc"].includes(item.position.toLowerCase())
+                      ? "text-9xl"
+                      : "text-7xl"
+                  } font-extrabold text-[#FF4655] w-full text-center`}
+                  style={{
+                    top: "50%",
+                    transform: [{ translateY: -32 }], // Ajuste para centrar verticalmente
+                    zIndex: 1,
+                  }}
+                >
+                  {item.position.toUpperCase()}
+                </Text>
+
+                {/* Foto del jugador */}
                 <Image
-                  source={{ uri: item.img }} // Imagen desde la API
-                  className="w-48 h-48 rounded-full mr-4"
-                  resizeMode={
-                    [
-                      "brokenblade",
-                      "yike",
-                      "caps",
-                      "hans sama",
-                      "mikyx",
-                    ].includes(item.nickname.toLowerCase())
-                      ? "center"
-                      : "cover"
-                  }
+                  source={{ uri: item.img }}
+                  className="w-full h-full object-cover"
+                  style={{ position: "absolute", zIndex: 2 }}
+                  resizeMode="contain"
                 />
-                <View className="flex-1">
-                  <Text className="text-3xl font-bold mb-1">
-                    {item.nickname}
-                  </Text>
-                  <Text className="text-xl text-slate-950">{item.name}</Text>
-                  <Text className="text-xl text-slate-950">{item.country}</Text>
-                  <Text className="text-xl text-slate-950">
-                    {item.position}
-                  </Text>
-                  <Text className="text-xl text-slate-950">
-                    Age: {item.age}
-                  </Text>
-                  <Text className="text-xl text-slate-950">
-                    Years: {formatYears(item.years)}
-                  </Text>
-                </View>
-              </Pressable>
-            </Link>
-          )}
-          showsVerticalScrollIndicator={false}
-        />
+              </View>
+
+              {/* Información del jugador */}
+              <View className="flex-col items-start">
+                <Text className="text-3xl font-bold text-[#ffffff]">
+                  {item.nickname}
+                </Text>
+                <Text className="text-lg text-[#c9c9c9]">{item.name}</Text>
+                <Text className="text-lg text-[#c9c9c9]">
+                  {item.country} | {item.position}
+                </Text>
+                <Text className="text-sm text-[#7d7d7d]">
+                  Age: {item.age} | Years: {formatYears(item.years)}
+                </Text>
+              </View>
+            </Pressable>
+          </Link>
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 70 }}
+      />
       )}
     </View>
   );

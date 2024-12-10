@@ -41,18 +41,18 @@ export default function PlayerDetail() {
   }, [nickname]);
 
   return (
-    <View className="flex-1 bg-[#C8D9F0] pt-4 px-2">
+    <View className="flex-1 bg-[#111111] pt-4 px-2">
       <Stack.Screen
         options={{
-          headerStyle: { backgroundColor: "#C8D9F0" },
+          headerStyle: { backgroundColor: "#111111" },
           headerShadowVisible: false,
-          headerTintColor: "black",
+          headerTintColor: "white",
           headerTitleAlign: "center",
           headerBackTitleVisible: false, // Oculta el texto de retorno en iOS
           headerTitle: () => (
             <Text
               style={{
-                color: "black",
+                color: "white",
                 fontSize: 20,
                 fontWeight: "bold",
                 maxWidth: 300,
@@ -68,7 +68,7 @@ export default function PlayerDetail() {
 
       <View>
         {loading ? (
-          <ActivityIndicator color={"#000"} size={"large"} />
+          <ActivityIndicator color={"#fff"} size={"large"} />
         ) : error ? (
           <View className="flex-1 justify-center items-center">
             <Text className="text-xl text-red-500">{error}</Text>
@@ -116,12 +116,12 @@ export default function PlayerDetail() {
                   />
                 </View>
 
-                <Text className="text-black text-center font-bold text-2xl">
+                <Text className="text-white text-center font-bold text-2xl">
                   {playerInfo.name}
                 </Text>
 
                 <View
-                  className="bg-[#92a2c8] shadow-md rounded-lg p-4 mt-4 w-11/12"
+                  className="bg-[#262424] shadow-md rounded-lg p-4 mt-4 w-11/12"
                   style={{
                     ...Platform.select({
                       ios: {
@@ -136,23 +136,23 @@ export default function PlayerDetail() {
                     }),
                   }}
                 >
-                  <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  <Text className="text-white font-semibold text-lg mb-2">
                     Country:
                   </Text>
-                  <Text className="text-slate-950 text-base mb-4">
+                  <Text className="text-[#c9c9c9] text-base mb-4">
                     {playerInfo.country}
                   </Text>
-                  <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  <Text className="text-white font-semibold text-lg mb-2">
                     Position:
                   </Text>
-                  <Text className="text-slate-950 text-base mb-4">
+                  <Text className="text-[#c9c9c9] text-base mb-4">
                     {playerInfo.position}
                   </Text>
 
-                  <Text className="text-slate-950 font-semibold text-lg mb-2">
+                  <Text className="text-white font-semibold text-lg mb-2">
                     Years Played:
                   </Text>
-                  <Text className="text-slate-950 text-base">
+                  <Text className="text-[#c9c9c9] text-base">
                     {formatYears(playerInfo.years)}
                   </Text>
                 </View>
