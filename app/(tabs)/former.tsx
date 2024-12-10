@@ -16,8 +16,8 @@ import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { Picker } from "@react-native-picker/picker";
 
-const PLAYERS_API_URL = "https://g2historyapi.vercel.app/players"; // URL para jugadores
-const YEARS_API_URL = "https://g2historyapi.vercel.app/years"; // URL para años
+const PLAYERS_API_URL = "https://g2historyapi-production.up.railway.app//players"; // URL para jugadores
+const YEARS_API_URL = "https://g2historyapi-production.up.railway.app//years"; // URL para años
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);

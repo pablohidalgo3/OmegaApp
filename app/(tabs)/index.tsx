@@ -13,7 +13,7 @@ import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { Platform } from "react-native";
 
-const API_URL = "https://g2historyapi.vercel.app/players/year"; // Cambia esto si la API está desplegada en un servidor remoto
+const API_URL = "https://g2historyapi-production.up.railway.app//players/year"; // Cambia esto si la API está desplegada en un servidor remoto
 const currentYear = new Date().getFullYear().toString();
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
