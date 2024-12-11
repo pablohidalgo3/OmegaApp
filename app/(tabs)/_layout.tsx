@@ -2,7 +2,7 @@ import "../../global.css";
 import { Tabs } from "expo-router";
 import { HomeIcon, InfoIcon, FormerIcon } from "../../components/Icons";
 import { Logo } from "@/components/Logo";
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, Platform } from "react-native";
 import { useState } from "react";
 
 export default function TabLayout() {
@@ -24,6 +24,7 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
+            top: Platform.OS === "ios" ? 11 : 0,
           },
           tabBarIconStyle: { marginBottom: 0 },
           tabBarLabelStyle: { display: "none" },
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: "absolute",
-    bottom: 10,
+    bottom: Platform.OS === "ios" ? 25 : 10,
     left: 20,
     right: 20,
     borderRadius: 30,
