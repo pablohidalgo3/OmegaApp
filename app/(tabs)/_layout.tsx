@@ -31,11 +31,19 @@ export default function TabLayout() {
           // Desactiva el ripple globalmente en todos los botones
           tabBarButton: (props) => (
             <TouchableWithoutFeedback onPress={props.onPress} accessible={true}>
-              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 10, // Aumenta el área táctil
+                  margin: -10, // Compensa el padding para que no desplace el ícono
+                }}
+              >
                 {props.children}
               </View>
             </TouchableWithoutFeedback>
-          ),
+          )
+          
         }}
       >
         <Tabs.Screen
