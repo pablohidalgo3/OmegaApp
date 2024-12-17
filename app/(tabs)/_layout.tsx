@@ -5,6 +5,7 @@ import { Logo } from "@/components/Logo";
 import { Text, View, StyleSheet, Platform, TouchableWithoutFeedback } from "react-native";
 import { useState } from "react";
 
+
 export default function TabLayout() {
   const [selectedYear, setSelectedYear] = useState();
 
@@ -24,7 +25,7 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
-            top: Platform.OS === "ios" ? 11 : -1,
+            top: Platform.OS === "ios" ? 9 : -1,
           },
           tabBarIconStyle: { marginBottom: 0, height: 32 },
           tabBarLabelStyle: { display: "none" },
