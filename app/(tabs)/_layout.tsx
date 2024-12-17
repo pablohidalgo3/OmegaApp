@@ -2,7 +2,7 @@ import "../../global.css";
 import { Tabs } from "expo-router";
 import { HomeIcon, InfoIcon, FormerIcon } from "../../components/Icons";
 import { Logo } from "@/components/Logo";
-import { Text, View, StyleSheet, Platform } from "react-native";
+import { Text, View, StyleSheet, Platform, TouchableWithoutFeedback } from "react-native";
 import { useState } from "react";
 
 export default function TabLayout() {
@@ -13,9 +13,9 @@ export default function TabLayout() {
       <Tabs
         screenOptions={{
           headerStyle: { backgroundColor: "#111111" },
-          headerStatusBarHeight: 42,
+          headerStatusBarHeight: 10,
           headerTitle: "",
-          headerLeft: () => <Logo style={{ marginLeft: 10 }} />,
+          headerLeft: () => <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />,
           headerShadowVisible: false,
           headerTintColor: "#000",
           tabBarStyle: [styles.tabBar],
@@ -24,10 +24,18 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
-            top: Platform.OS === "ios" ? 11 : 0,
+            top: Platform.OS === "ios" ? 11 : -1,
           },
-          tabBarIconStyle: { marginBottom: 0 },
+          tabBarIconStyle: { marginBottom: 0, height: 32 },
           tabBarLabelStyle: { display: "none" },
+          // Desactiva el ripple globalmente en todos los botones
+          tabBarButton: (props) => (
+            <TouchableWithoutFeedback onPress={props.onPress} accessible={true}>
+              <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                {props.children}
+              </View>
+            </TouchableWithoutFeedback>
+          ),
         }}
       >
         <Tabs.Screen
@@ -93,6 +101,6 @@ const styles = StyleSheet.create({
     height: 60,
     paddingHorizontal: 10,
     borderTopWidth: 0,
+    marginHorizontal: 20,
   },
 });
-
