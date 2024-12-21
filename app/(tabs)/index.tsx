@@ -64,7 +64,7 @@ const PlayersList: React.FC = () => {
   }
 
   return (
-    <View className="flex-1 bg-[#111111] pt-4 px-2">
+    <View className="flex-1 bg-[#111111] pt-7 px-2">
       <FlatList
         data={players}
         keyExtractor={(player) => player.nickname}

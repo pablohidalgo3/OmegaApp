@@ -2,9 +2,14 @@ import "../../global.css";
 import { Tabs } from "expo-router";
 import { HomeIcon, InfoIcon, FormerIcon } from "../../components/Icons";
 import { Logo } from "@/components/Logo";
-import { Text, View, StyleSheet, Platform, TouchableWithoutFeedback } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Platform,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useState } from "react";
-
 
 export default function TabLayout() {
   const [selectedYear, setSelectedYear] = useState();
@@ -13,10 +18,12 @@ export default function TabLayout() {
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: "#111111" },
-          headerStatusBarHeight: 10,
+          headerStyle: { backgroundColor: "#111111", height: Platform.OS === "ios" ? 124 : 60 },
+          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 2,
           headerTitle: "",
-          headerLeft: () => <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />,
+          headerLeft: () => (
+            <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />
+          ),
           headerShadowVisible: false,
           headerTintColor: "#000",
           tabBarStyle: [styles.tabBar],
@@ -25,7 +32,7 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
-            top: Platform.OS === "ios" ? 9 : -1,
+            top: Platform.OS === "ios" ? 15 : -1,
           },
           tabBarIconStyle: { marginBottom: 0, height: 32 },
           tabBarLabelStyle: { display: "none" },
@@ -43,8 +50,7 @@ export default function TabLayout() {
                 {props.children}
               </View>
             </TouchableWithoutFeedback>
-          )
-          
+          ),
         }}
       >
         <Tabs.Screen
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 25 : 10,
+    bottom: Platform.OS === "ios" ? 20 : 10,
     left: 20,
     right: 20,
     borderRadius: 30,
