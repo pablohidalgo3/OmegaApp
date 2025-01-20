@@ -3,16 +3,12 @@
     "name": "G2 History",
     "slug": "G2History",
     "version": "1.0.0",
+    "backgroundColor": "#111111",
     "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#25292e"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.omega9937.G2History"
@@ -32,18 +28,18 @@
     "plugins": [
       "expo-router",
       "expo-font",
-	  [
-		"expo-splash-screen",
-		{
-		  "backgroundColor": "#25292e",
-		  "image": "./assets/images/splash.png",
-		  "resizeMode": "contain",
-		  "dark": {
-			"image": "./assets/images/splash.png",
-			"backgroundColor": "#25292e"
-		  }
-		}
-	  ]
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#25292e",
+          "image": "./assets/images/splash.png",
+          "resizeMode": "contain",
+          "dark": {
+            "image": "./assets/images/splash.png",
+            "backgroundColor": "#25292e"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -68,7 +68,7 @@ export default function PlayerDetail() {
 
       <View>
         {loading ? (
-          <ActivityIndicator color={"#fff"} size={"large"} />
+          <ActivityIndicator color={"#ef4444"} size={"large"} />
         ) : error ? (
           <View className="flex-1 justify-center items-center">
             <Text className="text-xl text-red-500">{error}</Text>

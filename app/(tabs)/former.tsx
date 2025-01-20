@@ -126,7 +126,7 @@ const PlayersList: React.FC = () => {
     <View className="flex-1 bg-[#111111] pt-8 px-2">
       {/* Selector de año */}
       {loadingYears ? (
-        <ActivityIndicator color={"#fff"} size={"large"} />
+        <ActivityIndicator color={"#ef4444"} size={"large"} />
       ) : (
         <View className="mb-6 mx-5 bg-[#fff] rounded-lg">
           {Platform.OS === "ios" ? (
@@ -199,7 +199,7 @@ const PlayersList: React.FC = () => {
       )}
 
       {loadingPlayers ? (
-        <ActivityIndicator color={"#fff"} size={"large"} />
+        <ActivityIndicator color={"#ef4444"} size={"large"} />
       ) : error ? (
         <View className="flex-1 justify-center items-center">
           <Text className="text-xl text-red-500">{error}</Text>

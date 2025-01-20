@@ -50,7 +50,7 @@ const PlayersList: React.FC = () => {
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-[#111111]">
-        <ActivityIndicator color="#fff" size="large" />
+        <ActivityIndicator color="#ef4444" size="large" />
       </View>
     );
   }
