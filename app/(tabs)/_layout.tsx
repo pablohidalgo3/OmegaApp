@@ -18,8 +18,8 @@ export default function TabLayout() {
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: "#111111", height: Platform.OS === "ios" ? 124 : 60 },
-          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 2,
+          headerStyle: { backgroundColor: "#111111", height: Platform.OS === "ios" ? 124 : 70 },
+          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 15,
           headerTitle: "",
           headerLeft: () => (
             <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />
