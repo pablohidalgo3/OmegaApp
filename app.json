@@ -32,16 +32,18 @@
     "plugins": [
       "expo-router",
       "expo-font",
-	  "expo-splash-screen",
-        {
-          "backgroundColor": "#25292e",
-          "image": "./assets/images/splash.png",
-          "dark": {
-            "image": "./assets/images/splash.png",
-            "backgroundColor": "#25292e"
-          },
-          "imageWidth": 200
-        }
+	  [
+		"expo-splash-screen",
+		{
+		  "backgroundColor": "#25292e",
+		  "image": "./assets/images/splash.png",
+		  "dark": {
+			"image": "./assets/images/splash.png",
+			"backgroundColor": "#25292e"
+		  },
+		  "imageWidth": 200
+		}
+	  ]
     ],
     "experiments": {
       "typedRoutes": true
