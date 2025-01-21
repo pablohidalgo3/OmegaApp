@@ -8,5 +8,6 @@ export interface Player {
     position: string;
     years: string;
     img: string;
+    titles: string;
   }
   

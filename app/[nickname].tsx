@@ -10,7 +10,7 @@ import { Platform } from "react-native";
 const API_URL = "https://g2historyapi-production.up.railway.app/players"; // Cambia esto si tu API está desplegada en un servidor remoto
 
 export default function PlayerDetail() {
-  const { nickname } = useLocalSearchParams(); // usa 'nickname' en lugar de 'playerid'
+  const { nickname } = useLocalSearchParams();
   const [playerInfo, setPlayerInfo] = useState<Player | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -39,6 +39,68 @@ export default function PlayerDetail() {
 
     fetchPlayer();
   }, [nickname]);
+
+  const renderTrophies = (titles: string | null) => {
+    if (!titles || titles.trim() === "" || titles.trim() === "None yet") {
+      return (
+        <Text className="text-xl text-red-500 mt-6 text-center">
+          Forging a leyend...
+        </Text>
+      );
+    }
+    else if (titles.trim() === "None"){
+      return (
+        <Text className="text-xl text-red-500 mt-6 text-center">
+          No trophies
+        </Text>
+      );
+    }
+
+    const titleMap = {
+      "Rift Rivals": "🥇", // Menor importancia
+      "EU LCS": "🎖️",
+      LEC: "🏆", // Mayor importancia
+      MSI: "🌟", // Muy especial
+    };
+
+    const processedTitles = titles.split(";").map((title) => title.trim());
+
+    return (
+      <View className="mt-6 w-11/12 mb-8">
+        <Text className="text-white text-center text-xl font-bold mb-4">G2 Trophies</Text>
+        <View className="bg-[#262424] rounded-lg p-4">
+          {processedTitles
+            .reduce((rows: string[][], title, index) => {
+              const row = Math.floor(index / 3); // 3 trofeos por fila
+              if (!rows[row]) rows[row] = [];
+              rows[row].push(title);
+              return rows;
+            }, [])
+            .map((row, rowIndex) => (
+              <View key={rowIndex} className="flex-row justify-evenly mb-4">
+                {row.map((title, colIndex) => (
+                  <View key={colIndex} className="items-center" style={{ width: "30%" }}>
+                    <Text className="text-4xl">
+                      {
+                        titleMap[
+                          Object.keys(titleMap).find(
+                            (key): key is keyof typeof titleMap =>
+                              title.includes(key)
+                          ) || "LEC"
+                        ]
+                      }
+                    </Text>
+                    <Text className="text-sm text-[#c9c9c9] text-center mt-2" style={{ flexWrap: "wrap" }}>
+                      {title}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            ))}
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View className="flex-1 bg-[#111111] pt-4 px-2">
@@ -78,7 +140,6 @@ export default function PlayerDetail() {
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
               <View className="justify-center items-center text-center">
                 <View className="relative w-[260px] h-[310px] mb-4">
-                  {/* Imagen de fondo */}
                   <Image
                     source={g2logo}
                     style={{
@@ -87,19 +148,14 @@ export default function PlayerDetail() {
                       height: 300,
                       left: "50%",
                       top: "50%",
-                      transform: [
-                        { translateX: -130 },
-                        { translateY: -150 },
-                      ],
+                      transform: [{ translateX: -130 }, { translateY: -150 }],
                       borderRadius: 10,
                       opacity: 0.4,
                       resizeMode: "cover",
                     }}
                   />
-
-                  {/* Imagen principal del jugador */}
                   <Image
-                    source={{ uri: playerInfo.img }} // Cambiado para usar la URL desde la API
+                    source={{ uri: playerInfo.img }}
                     style={{
                       width: 214,
                       height: 294,
@@ -108,14 +164,10 @@ export default function PlayerDetail() {
                       position: "absolute",
                       left: "50%",
                       top: "50%",
-                      transform: [
-                        { translateX: -107 },
-                        { translateY: -147 },
-                      ],
+                      transform: [{ translateX: -107 }, { translateY: -147 }],
                     }}
                   />
                 </View>
-
                 <Text className="text-white text-center font-bold text-2xl">
                   {playerInfo.name}
                 </Text>
@@ -156,6 +208,7 @@ export default function PlayerDetail() {
                     {formatYears(playerInfo.years)}
                   </Text>
                 </View>
+                {renderTrophies(playerInfo.titles)}
               </View>
             </ScrollView>
           )
