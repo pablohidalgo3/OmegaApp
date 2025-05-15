@@ -1,6 +1,6 @@
 import "../../global.css";
 import { Tabs } from "expo-router";
-import { HomeIcon, InfoIcon, FormerIcon } from "../../components/Icons";
+import { HomeIcon, InfoIcon, FormerIcon, RankingIcon, CalendarIcon } from "../../components/Icons";
 import { Logo } from "@/components/Logo";
 import {
   Text,
@@ -81,6 +81,28 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
+          name="ranking"
+          options={{
+            tabBarIcon: ({ color }) => <RankingIcon color={color} />,
+            headerRight: () => (
+              <Text className="text-white font-bold text-2xl me-3 mb-1">
+                Ranking
+              </Text>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="calendar"
+          options={{
+            tabBarIcon: ({ color }) => <CalendarIcon color={color} />,
+            headerRight: () => (
+              <Text className="text-white font-bold text-2xl me-3 mb-1">
+                Calendar
+              </Text>
+            ),
+          }}
+        />
+        <Tabs.Screen
           name="about"
           options={{
             tabBarIcon: ({ color }) => <InfoIcon color={color} />,
@@ -92,6 +114,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
+      
     </View>
   );
 }
