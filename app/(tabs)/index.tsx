@@ -47,6 +47,23 @@ const PlayersList: React.FC = () => {
     fetchPlayers();
   }, []);
 
+  function calculateAge(birthday: string | number | Date) {
+    const birthDate = new Date(birthday);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    // Si aún no ha cumplido años este año:
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-[#111111]">
@@ -115,7 +132,7 @@ const PlayersList: React.FC = () => {
                   {item.country} | {item.position}
                 </Text>
                 <Text className="text-sm text-[#7d7d7d]">
-                  Age: {item.age} | Years: {formatYears(item.years)}
+                  Age: {calculateAge(item.birthday)} | Years: {formatYears(item.years)}
                 </Text>
               </View>
             </Pressable>
