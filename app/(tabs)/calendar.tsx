@@ -106,6 +106,8 @@ export default function CalendarTab() {
               ...match,
               date: `${datePart} - ${timePart}`,
               status,
+              team1Logo: match.team1Logo?.replace(/\d+px/, "100px"),
+              team2Logo: match.team2Logo?.replace(/\d+px/, "100px"),
             } as Match;
           })
           .filter(Boolean) as Match[];

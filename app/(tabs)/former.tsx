@@ -127,7 +127,7 @@ const PlayersList: React.FC = () => {
       headerRight: () => (
         <Text
           className={`text-white font-bold mb-1 ${
-            selectedYear === "2016.2" || selectedYear === "2016.3"
+            selectedYear === "2016.1" || selectedYear === "2016.2" || selectedYear === "2016.3"
               ? "text-xl"
               : "text-2xl"
           } me-3`}
