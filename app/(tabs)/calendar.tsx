@@ -11,7 +11,7 @@ import {
 import { Svg, Path } from "react-native-svg";
 
 const CALENDAR_API_ENDPOINT =
-  "https://g2historyapi-production.up.railway.app/matches/upcoming";
+  "https://g2historyapi.fly.dev/matches/upcoming";
 
 interface Match {
   id: string;

@@ -7,7 +7,7 @@ import { formatYears } from "@/lib/formatYears"; // Asegúrate de tener este imp
 import g2logo from "../assets/images/g2logo.png";
 import { Platform } from "react-native";
 
-const API_URL = "https://g2historyapi-production.up.railway.app/players"; // Cambia esto si tu API está desplegada en un servidor remoto
+const API_URL = "https://g2historyapi.fly.dev/players"; // Cambia esto si tu API está desplegada en un servidor remoto
 
 export default function PlayerDetail() {
   const { nickname } = useLocalSearchParams();

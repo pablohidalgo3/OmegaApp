@@ -12,7 +12,7 @@ import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 
-const API_URL = "https://g2historyapi-production.up.railway.app/players/year";
+const API_URL = "https://g2historyapi.fly.dev/players/year";
 const currentYear = new Date().getFullYear().toString();
 
 const PlayersList: React.FC = () => {

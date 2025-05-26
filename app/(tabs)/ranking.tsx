@@ -12,9 +12,9 @@ import { Player as YearPlayer } from "../../interfaces/Player";
 
 // Endpoints
 const YEAR_PLAYERS_API_ENDPOINT =
-  "https://g2historyapi-production.up.railway.app/players/year";
+  "https://g2historyapi.fly.dev/players/year";
 const RANKING_API_ENDPOINT =
-  "https://g2historyapi-production.up.railway.app/ranking";
+  "https://g2historyapi.fly.dev/ranking";
 
 // Tier icon assets
 const tierIcons: Record<string, any> = {
