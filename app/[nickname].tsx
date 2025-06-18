@@ -47,8 +47,7 @@ export default function PlayerDetail() {
           Forging a leyend...
         </Text>
       );
-    }
-    else if (titles.trim() === "None"){
+    } else if (titles.trim() === "None") {
       return (
         <Text className="text-xl text-red-500 mt-6 text-center">
           No trophies
@@ -67,7 +66,9 @@ export default function PlayerDetail() {
 
     return (
       <View className="mt-6 w-11/12 mb-8">
-        <Text className="text-white text-center text-xl font-bold mb-4">G2 Trophies</Text>
+        <Text className="text-white text-center text-xl font-bold mb-4">
+          G2 Trophies
+        </Text>
         <View className="bg-[#262424] rounded-lg p-4">
           {processedTitles
             .reduce((rows: string[][], title, index) => {
@@ -79,7 +80,11 @@ export default function PlayerDetail() {
             .map((row, rowIndex) => (
               <View key={rowIndex} className="flex-row justify-evenly mb-4">
                 {row.map((title, colIndex) => (
-                  <View key={colIndex} className="items-center" style={{ width: "30%" }}>
+                  <View
+                    key={colIndex}
+                    className="items-center"
+                    style={{ width: "30%" }}
+                  >
                     <Text className="text-4xl">
                       {
                         titleMap[
@@ -90,7 +95,10 @@ export default function PlayerDetail() {
                         ]
                       }
                     </Text>
-                    <Text className="text-sm text-[#c9c9c9] text-center mt-2" style={{ flexWrap: "wrap" }}>
+                    <Text
+                      className="text-sm text-[#c9c9c9] text-center mt-2"
+                      style={{ flexWrap: "wrap" }}
+                    >
                       {title}
                     </Text>
                   </View>
@@ -117,10 +125,10 @@ export default function PlayerDetail() {
                 color: "white",
                 fontSize: 20,
                 fontWeight: "bold",
-                maxWidth: 300,
+                width: 200,
+                maxWidth: 200,
+                textAlign: "center",
               }}
-              numberOfLines={1}
-              ellipsizeMode="tail"
             >
               {playerInfo ? playerInfo.nickname : "Cargando..."}
             </Text>

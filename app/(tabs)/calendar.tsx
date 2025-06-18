@@ -10,12 +10,13 @@ import {
 } from "react-native";
 import { Svg, Path } from "react-native-svg";
 
-const CALENDAR_API_ENDPOINT =
-  "https://g2historyapi.fly.dev/matches/upcoming";
+const CALENDAR_API_ENDPOINT = "https://g2historyapi.fly.dev/matches/upcoming";
 
 interface Match {
   id: string;
-  tournament: { name: string; url?: string };
+  tournament_name: string;
+  tournament_url: string;
+  tournament_logo?: string;
   bo: string;
   team1Logo?: string;
   team1: string;
@@ -23,7 +24,8 @@ interface Match {
   team2: string;
   date: string; // “May 4, 2025 - 19:00 CEST”
   status?: "LIVE" | "FINALIZED" | null;
-  streams: { twitch?: string; youtube?: string };
+  streams_twitch?: string;
+  streams_youtube?: string;
 }
 
 const MONTHS = [
@@ -153,10 +155,16 @@ export default function CalendarTab() {
         <View className="mb-6 bg-gray-800 rounded-lg overflow-hidden shadow-lg">
           <View className="p-4">
             {/* Header */}
-            <View className="flex-row justify-between items-center mb-2">
-              <Text className="text-sm font-semibold text-gray-400">
-                {item.tournament.name}
-              </Text>
+            <View className="flex-row justify-between items-center mb-4">
+              <View className="flex-row items-center gap-2">
+                <Image
+                  source={{ uri: item.tournament_logo || "" }}
+                  className="size-7"
+                />
+                <Text className="text-sm font-semibold text-gray-400">
+                  {item.tournament_name}
+                </Text>
+              </View>
               <View className="bg-gray-700 rounded-full px-3 py-1">
                 <Text className="text-xs text-white font-semibold">
                   {item.bo.toUpperCase()}
@@ -222,9 +230,9 @@ export default function CalendarTab() {
             {/* Streams & Calendar */}
             <View className="flex-row flex-wrap justify-between items-center">
               <View className="flex-row flex-wrap gap-2 mb-2">
-                {item.streams.twitch && (
+                {item.streams_twitch && (
                   <Pressable
-                    onPress={() => Linking.openURL(item.streams.twitch!)}
+                    onPress={() => Linking.openURL(item.streams_twitch!)}
                     className="bg-purple-700 px-3 py-1 rounded-full flex-row items-center"
                   >
                     <Svg
@@ -241,9 +249,9 @@ export default function CalendarTab() {
                     </Text>
                   </Pressable>
                 )}
-                {item.streams.youtube && (
+                {item.streams_youtube && (
                   <Pressable
-                    onPress={() => Linking.openURL(item.streams.youtube!)}
+                    onPress={() => Linking.openURL(item.streams_youtube!)}
                     className="bg-red-700 px-3 py-1 rounded-full flex-row items-center"
                   >
                     <Svg
@@ -276,9 +284,9 @@ export default function CalendarTab() {
             </View>
 
             {/* Tournament link */}
-            {item.tournament.url && (
+            {item.tournament_url && (
               <Pressable
-                onPress={() => Linking.openURL(item.tournament.url!)}
+                onPress={() => Linking.openURL(item.tournament_url!)}
                 className="mt-3"
               >
                 <Text className="text-xs text-gray-400">

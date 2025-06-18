@@ -123,14 +123,14 @@ export default function RankingTab() {
                 className={`mb-6 rounded-2xl border ${cardBg} ${cardBorder} h-40`}
                 style={{ elevation: 5 }}
               >
-                <View className="flex-row items-center p-4 h-full">
+                <View className="flex-row items-center px-2 py-4 h-full">
                   {/* Rank */}
-                  <Text className="w-12 text-center text-2xl font-bold text-gray-900 mr-4">
+                  <Text className="w-12 text-center text-2xl font-bold text-gray-900 mr-3">
                     #{item.rank}
                   </Text>
 
                   {/* Avatar container to center image */}
-                  <View className="size-28 rounded-full overflow-hidden mr-4 items-center justify-start">
+                  <View className="size-28 rounded-full overflow-hidden mr-2 items-center justify-start">
                     {item.img && (
                       <Image
                         source={{ uri: item.img }}
@@ -149,16 +149,19 @@ export default function RankingTab() {
                       <Text className="text-3xl font-bold text-gray-900">
                         {item.nickname}
                       </Text>
-                      <View className="flex-row items-center justify-center mt-1">
-                        {tierIcons[item.tier.toLowerCase()] && (
-                          <Image
-                            source={tierIcons[item.tier.toLowerCase()]}
-                            className="size-16 mr-2"
-                          />
-                        )}
-                        <Text className="text-xl text-gray-700">
-                          {item.tier} {item.lp} LP
-                        </Text>
+                      <View className="items-center justify-center">
+                        <View className="flex-row items-center justify-center">
+                          {tierIcons[item.tier.toLowerCase()] && (
+                            <Image
+                              source={tierIcons[item.tier.toLowerCase()]}
+                              className="size-16 mr-2"
+                            />
+                          )}
+                          <Text className="text-3xl font-semibold text-gray-700">
+                            {item.tier}
+                          </Text>
+                        </View>
+                        <Text className="text-xl text-gray-600">{item.lp} LP</Text>
                       </View>
                     </View>
                   </View>

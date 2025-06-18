@@ -1,6 +1,12 @@
 import "../../global.css";
 import { Tabs } from "expo-router";
-import { HomeIcon, InfoIcon, FormerIcon, RankingIcon, CalendarIcon } from "../../components/Icons";
+import {
+  HomeIcon,
+  InfoIcon,
+  FormerIcon,
+  RankingIcon,
+  CalendarIcon,
+} from "../../components/Icons";
 import { Logo } from "@/components/Logo";
 import {
   Text,
@@ -18,8 +24,11 @@ export default function TabLayout() {
     <View style={styles.container}>
       <Tabs
         screenOptions={{
-          headerStyle: { backgroundColor: "#111111", height: Platform.OS === "ios" ? 124 : 70 },
-          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 15,
+          headerStyle: {
+            backgroundColor: "#111111",
+            height: Platform.OS === "ios" ? 124 : 115,
+          },
+          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 50,
           headerTitle: "",
           headerLeft: () => (
             <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />
@@ -32,7 +41,7 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
-            top: Platform.OS === "ios" ? 15 : -1,
+            top: Platform.OS === "ios" ? 15 : 7,
           },
           tabBarIconStyle: { marginBottom: 0, height: 32 },
           tabBarLabelStyle: { display: "none" },
@@ -59,7 +68,7 @@ export default function TabLayout() {
             tabBarIcon: ({ color }) => <HomeIcon color={color} />,
             headerRight: () => (
               <Text className="text-white font-bold text-2xl me-3 mb-1">
-                2024 Roster
+                {new Date().getFullYear()} Roster
               </Text>
             ),
           }}
@@ -114,7 +123,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      
     </View>
   );
 }
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     position: "absolute",
-    bottom: Platform.OS === "ios" ? 20 : 10,
+    bottom: Platform.OS === "ios" ? 20 : 20,
     left: 20,
     right: 20,
     borderRadius: 30,
