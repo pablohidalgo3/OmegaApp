@@ -9,12 +9,11 @@ import {
 } from "react-native";
 import { Link } from "expo-router";
 import { Player as YearPlayer } from "../../interfaces/Player";
+import { LinearGradient } from "expo-linear-gradient";
 
 // Endpoints
-const YEAR_PLAYERS_API_ENDPOINT =
-  "https://g2historyapi.fly.dev/players/year";
-const RANKING_API_ENDPOINT =
-  "https://g2historyapi.fly.dev/ranking";
+const YEAR_PLAYERS_API_ENDPOINT = "https://g2historyapi.fly.dev/players/year";
+const RANKING_API_ENDPOINT = "https://g2historyapi.fly.dev/ranking";
 
 // Tier icon assets
 const tierIcons: Record<string, any> = {
@@ -95,41 +94,37 @@ export default function RankingTab() {
     <View className="flex-1 bg-[#111111] pt-8">
       <FlatList
         data={players}
-        keyExtractor={(item) => item.nickname || item.nickname}
+        keyExtractor={(item) => item.nickname}
         contentContainerStyle={{ paddingBottom: 80, paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => {
-          // Backgrounds and borders
-          const cardBg =
+          // sombra dinámica según posición
+          const shadowColor =
             index === 0
-              ? "bg-yellow-100"
+              ? "rgb(231,243,106)"
               : index === 1
-              ? "bg-gray-400"
+              ? "rgba(172,186,187,0.8)"
               : index === 2
-              ? "bg-orange-400"
-              : "bg-white";
-          const cardBorder =
-            index === 0
-              ? "border-yellow-500"
-              : index === 1
-              ? "border-gray-500"
-              : index === 2
-              ? "border-orange-600"
-              : "border-gray-200";
+              ? "rgb(184,115,51)"
+              : "rgba(255,255,255,1)";
 
           return (
-            <Link href={`/${item.nickname}`} asChild>
+            <Link href={`/player/${item.nickname}`} asChild>
               <Pressable
-                className={`mb-6 rounded-2xl border ${cardBg} ${cardBorder} h-40`}
-                style={{ elevation: 5 }}
+                className="mb-6 rounded-2xl overflow-hidden"
               >
-                <View className="flex-row items-center px-2 py-4 h-full">
+                <LinearGradient
+                  colors={["#f87171", "#0f172a"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  className="h-40 p-4 flex-row items-center"
+                >
                   {/* Rank */}
-                  <Text className="w-12 text-center text-2xl font-bold text-gray-900 mr-3">
+                  <Text className="text-2xl font-bold text-[#FBFBFB] mr-4 drop-shadow-[0_6px_4px_rgba(0,0,0,0.6)]">
                     #{item.rank}
                   </Text>
 
-                  {/* Avatar container to center image */}
+                  {/* Avatar */}
                   <View className="size-28 rounded-full overflow-hidden mr-2 items-center justify-start">
                     {item.img && (
                       <Image
@@ -141,31 +136,26 @@ export default function RankingTab() {
                   </View>
 
                   {/* Info */}
-                  {/* Info aligned right */}
-                  {/* Info column centered */}
-                  <View className="flex-1 justify-center items-center">
-                    {/* Info column with separate rows centered */}
-                    <View className="flex-col items-center">
-                      <Text className="text-3xl font-bold text-gray-900">
-                        {item.nickname}
-                      </Text>
-                      <View className="items-center justify-center">
-                        <View className="flex-row items-center justify-center">
-                          {tierIcons[item.tier.toLowerCase()] && (
-                            <Image
-                              source={tierIcons[item.tier.toLowerCase()]}
-                              className="size-16 mr-2"
-                            />
-                          )}
-                          <Text className="text-3xl font-semibold text-gray-700">
-                            {item.tier}
-                          </Text>
-                        </View>
-                        <Text className="text-xl text-gray-600">{item.lp} LP</Text>
+                  <View className="flex-1 items-center">
+                    <Text className="mb-1 text-2xl font-bold text-[#FBFBFB]">
+                      {item.nickname}
+                    </Text>
+                    <View className="flex-row items-center gap-2">
+                      <Image
+                        source={tierIcons[item.tier.toLowerCase()]}
+                        className="w-14 h-14"
+                      />
+                      <View>
+                        <Text className="text-2xl text-[#FBFBFB]">
+                          {item.tier}
+                        </Text>
+                        <Text className="text-xl text-[#FBFBFB]">
+                          {item.lp} LP
+                        </Text>
                       </View>
                     </View>
                   </View>
-                </View>
+                </LinearGradient>
               </Pressable>
             </Link>
           );
