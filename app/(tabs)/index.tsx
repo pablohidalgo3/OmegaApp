@@ -13,6 +13,7 @@ import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 
 const API_URL = "https://g2historyapi.fly.dev/players/year";
+const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
 const currentYear = new Date().getFullYear().toString();
 
 const PlayersList: React.FC = () => {
@@ -23,7 +24,11 @@ const PlayersList: React.FC = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await fetch(API_URL + "/" + currentYear);
+        const response = await fetch(API_URL + "/" + currentYear, {
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`
+          }
+        });
         if (!response.ok) {
           throw new Error("Error al obtener los jugadores");
         }

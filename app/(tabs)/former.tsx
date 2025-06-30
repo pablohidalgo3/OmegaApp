@@ -18,6 +18,7 @@ import { Picker } from "@react-native-picker/picker";
 
 const PLAYERS_API_URL = "https://g2historyapi.fly.dev/players"; // URL para jugadores
 const YEARS_API_URL = "https://g2historyapi.fly.dev/years"; // URL para años
+const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -36,7 +37,11 @@ const PlayersList: React.FC = () => {
     const fetchYears = async () => {
       setLoadingYears(true);
       try {
-        const response = await fetch(YEARS_API_URL);
+        const response = await fetch(YEARS_API_URL, {
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`
+          }
+        });
         if (!response.ok) {
           throw new Error("Error al obtener los años");
         }
@@ -85,7 +90,11 @@ const PlayersList: React.FC = () => {
       setError(null);
 
       try {
-        const response = await fetch(PLAYERS_API_URL);
+        const response = await fetch(PLAYERS_API_URL, {
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`
+          }
+        });
         if (!response.ok) {
           throw new Error("Error al obtener los jugadores");
         }

@@ -12,6 +12,7 @@ import { Svg, Path } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 
 const CALENDAR_API_ENDPOINT = "https://g2historyapi.fly.dev/matches/upcoming";
+const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
 
 interface Match {
   id: string;
@@ -51,7 +52,11 @@ export default function CalendarTab() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(CALENDAR_API_ENDPOINT);
+        const res = await fetch(CALENDAR_API_ENDPOINT, {
+          headers: {
+            "Authorization": `Bearer ${API_KEY}`
+          }
+        });
         if (!res.ok) throw new Error("Error al obtener calendario");
         const rawMatches: any[] = await res.json();
 

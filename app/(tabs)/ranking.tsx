@@ -14,6 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 // Endpoints
 const YEAR_PLAYERS_API_ENDPOINT = "https://g2historyapi.fly.dev/players/year";
 const RANKING_API_ENDPOINT = "https://g2historyapi.fly.dev/ranking";
+const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
 
 // Tier icon assets
 const tierIcons: Record<string, any> = {
@@ -43,8 +44,16 @@ export default function RankingTab() {
       try {
         const currentYear = new Date().getFullYear();
         const [yearRes, rankRes] = await Promise.all([
-          fetch(`${YEAR_PLAYERS_API_ENDPOINT}/${currentYear}`),
-          fetch(RANKING_API_ENDPOINT),
+          fetch(`${YEAR_PLAYERS_API_ENDPOINT}/${currentYear}`, {
+            headers: {
+              "Authorization": `Bearer ${API_KEY}`
+            }
+          }),
+          fetch(RANKING_API_ENDPOINT, {
+            headers: {
+              "Authorization": `Bearer ${API_KEY}`
+            }
+          }),
         ]);
         if (!yearRes.ok || !rankRes.ok) {
           throw new Error("Error al obtener datos");

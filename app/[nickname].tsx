@@ -8,6 +8,7 @@ import g2logo from "../assets/images/g2logo.png";
 import { Platform } from "react-native";
 
 const API_URL = "https://g2historyapi.fly.dev/players"; // Cambia esto si tu API está desplegada en un servidor remoto
+const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
 
 export default function PlayerDetail() {
   const { nickname } = useLocalSearchParams();
@@ -19,7 +20,11 @@ export default function PlayerDetail() {
     const fetchPlayer = async () => {
       if (nickname) {
         try {
-          const response = await fetch(`${API_URL}/${nickname}`);
+          const response = await fetch(`${API_URL}/${nickname}`, {
+            headers: {
+              "Authorization": `Bearer ${API_KEY}`
+            }
+          });
           if (!response.ok) {
             throw new Error("Jugador no encontrado");
           }
