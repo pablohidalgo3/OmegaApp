@@ -26,9 +26,9 @@ export default function TabLayout() {
         screenOptions={{
           headerStyle: {
             backgroundColor: "#111111",
-            height: Platform.OS === "ios" ? 124 : 115,
+            height: Platform.OS === "ios" ? 124 : 70,
           },
-          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 50,
+          headerStatusBarHeight: Platform.OS === "ios" ? 70 : 15,
           headerTitle: "",
           headerLeft: () => (
             <Logo style={{ marginLeft: 10 }} tvParallaxProperties={undefined} />
@@ -41,7 +41,7 @@ export default function TabLayout() {
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
-            top: Platform.OS === "ios" ? 15 : 7,
+            top: Platform.OS === "ios" ? 15 : -1,
           },
           tabBarIconStyle: { marginBottom: 0, height: 32 },
           tabBarLabelStyle: { display: "none" },
