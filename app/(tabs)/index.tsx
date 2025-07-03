@@ -11,9 +11,12 @@ import { Link } from "expo-router";
 import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
+import Constants from 'expo-constants';
 
-const API_URL = "https://g2historyapi.fly.dev/players/year";
-const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+
+const API_URL = apiUrl + "/players/year";
+const API_KEY = apiKey;
 const currentYear = new Date().getFullYear().toString();
 
 const PlayersList: React.FC = () => {

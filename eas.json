@@ -7,15 +7,27 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "API_URL": "https://g2historyapi.fly.dev",
+        "API_KEY": "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e"
+      }
     },
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://g2historyapi.fly.dev",
+        "API_KEY": "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e"
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "API_URL": "https://g2historyapi.fly.dev",
+        "API_KEY": "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e"
+      }
     }
   },
   "submit": {

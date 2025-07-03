@@ -10,9 +10,12 @@ import {
 } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
+import Constants from 'expo-constants';
 
-const CALENDAR_API_ENDPOINT = "https://g2historyapi.fly.dev/matches/upcoming";
-const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+
+const CALENDAR_API_ENDPOINT = apiUrl + "/matches/upcoming";
+const API_KEY = apiKey;
 
 interface Match {
   id: string;

@@ -7,8 +7,12 @@ import { formatYears } from "@/lib/formatYears"; // Asegúrate de tener este imp
 import g2logo from "../assets/images/g2logo.png";
 import { Platform } from "react-native";
 
-const API_URL = "https://g2historyapi.fly.dev/players"; // Cambia esto si tu API está desplegada en un servidor remoto
-const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
+import Constants from 'expo-constants';
+
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+
+const API_URL = apiUrl + "/players"; // Cambia esto si tu API está desplegada en un servidor remoto
+const API_KEY = apiKey;
 
 export default function PlayerDetail() {
   const { nickname } = useLocalSearchParams();

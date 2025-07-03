@@ -15,10 +15,13 @@ import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { Picker } from "@react-native-picker/picker";
+import Constants from 'expo-constants';
 
-const PLAYERS_API_URL = "https://g2historyapi.fly.dev/players"; // URL para jugadores
-const YEARS_API_URL = "https://g2historyapi.fly.dev/years"; // URL para años
-const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+
+const PLAYERS_API_URL = apiUrl + "/players"; // URL para jugadores
+const YEARS_API_URL = apiUrl + "/years"; // URL para años
+const API_KEY = apiKey;
 
 const PlayersList: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([]);

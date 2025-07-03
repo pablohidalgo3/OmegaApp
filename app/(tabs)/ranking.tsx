@@ -10,11 +10,14 @@ import {
 import { Link } from "expo-router";
 import { Player as YearPlayer } from "../../interfaces/Player";
 import { LinearGradient } from "expo-linear-gradient";
+import Constants from 'expo-constants';
+
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
 
 // Endpoints
-const YEAR_PLAYERS_API_ENDPOINT = "https://g2historyapi.fly.dev/players/year";
-const RANKING_API_ENDPOINT = "https://g2historyapi.fly.dev/ranking";
-const API_KEY = "053eed99-1e5d-41a1-83fc-8fad2aa3bc1e";
+const YEAR_PLAYERS_API_ENDPOINT = apiUrl + "/players/year";
+const RANKING_API_ENDPOINT = apiUrl + "/ranking";
+const API_KEY = apiKey;
 
 // Tier icon assets
 const tierIcons: Record<string, any> = {
