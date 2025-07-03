@@ -15,9 +15,12 @@ import { Player } from "../../interfaces/Player";
 import { formatYears } from "../../lib/formatYears";
 import { positionOrder } from "../../lib/positionOrder";
 import { Picker } from "@react-native-picker/picker";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
-const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? {
+  apiUrl: "",
+  apiKey: "",
+};
 
 const PLAYERS_API_URL = apiUrl + "/players"; // URL para jugadores
 const YEARS_API_URL = apiUrl + "/years"; // URL para años
@@ -42,8 +45,8 @@ const PlayersList: React.FC = () => {
       try {
         const response = await fetch(YEARS_API_URL, {
           headers: {
-            "Authorization": `Bearer ${API_KEY}`
-          }
+            Authorization: `Bearer ${API_KEY}`,
+          },
         });
         if (!response.ok) {
           throw new Error("Error al obtener los años");
@@ -95,8 +98,8 @@ const PlayersList: React.FC = () => {
       try {
         const response = await fetch(PLAYERS_API_URL, {
           headers: {
-            "Authorization": `Bearer ${API_KEY}`
-          }
+            Authorization: `Bearer ${API_KEY}`,
+          },
         });
         if (!response.ok) {
           throw new Error("Error al obtener los jugadores");
@@ -139,7 +142,9 @@ const PlayersList: React.FC = () => {
       headerRight: () => (
         <Text
           className={`text-white font-bold mb-1 ${
-            selectedYear === "2016.1" || selectedYear === "2016.2" || selectedYear === "2016.3"
+            selectedYear === "2016.1" ||
+            selectedYear === "2016.2" ||
+            selectedYear === "2016.3"
               ? "text-xl"
               : "text-2xl"
           } me-3`}
@@ -213,6 +218,7 @@ const PlayersList: React.FC = () => {
             <Picker
               selectedValue={selectedYear}
               onValueChange={(year) => setSelectedYear(year)}
+              style={{ color: "#000" }} // Texto seleccionado en negro
               className="px-4 py-2 text-center rounded-lg"
             >
               {years.map((year) => (
@@ -220,6 +226,7 @@ const PlayersList: React.FC = () => {
                   key={year.year_identifier}
                   label={year.label}
                   value={year.year_identifier}
+                  color="#000" // Opciones en negro
                 />
               ))}
             </Picker>
@@ -239,64 +246,67 @@ const PlayersList: React.FC = () => {
         </View>
       ) : (
         <FlatList
-        data={players}
-        keyExtractor={(player) => player.nickname}
-        renderItem={({ item }) => (
-          <Link href={`/${item.nickname}`} asChild>
-            <Pressable
-              className="bg-[#262424] mb-6 rounded-3xl shadow-lg overflow-hidden"
-              style={{
-                padding: 16,
-                marginHorizontal: 16,
-                elevation: 5,
-              }}
-            >
-              {/* Contenedor con texto del rol en el fondo */}
-              <View className="relative w-full h-48 mb-4">
-                {/* Texto del rol en grande */}
-                <Text
-                  className={`absolute ${
-                    ["top", "mid", "adc"].includes(item.position.toLowerCase())
-                      ? "text-9xl"
-                      : "text-7xl"
-                  } font-extrabold text-[#FF4655] w-full text-center`}
-                  style={{
-                    top: "50%",
-                    transform: [{ translateY: -32 }], // Ajuste para centrar verticalmente
-                    zIndex: 1,
-                  }}
-                >
-                  {item.position.toUpperCase()}
-                </Text>
+          data={players}
+          keyExtractor={(player) => player.nickname}
+          renderItem={({ item }) => (
+            <Link href={`/${item.nickname}`} asChild>
+              <Pressable
+                className="bg-[#262424] mb-6 rounded-3xl shadow-lg overflow-hidden"
+                style={{
+                  padding: 16,
+                  marginHorizontal: 16,
+                  elevation: 5,
+                }}
+              >
+                {/* Contenedor con texto del rol en el fondo */}
+                <View className="relative w-full h-48 mb-4">
+                  {/* Texto del rol en grande */}
+                  <Text
+                    className={`absolute ${
+                      ["top", "mid", "adc"].includes(
+                        item.position.toLowerCase()
+                      )
+                        ? "text-9xl"
+                        : "text-7xl"
+                    } font-extrabold text-[#FF4655] w-full text-center`}
+                    style={{
+                      top: "50%",
+                      transform: [{ translateY: -32 }], // Ajuste para centrar verticalmente
+                      zIndex: 1,
+                    }}
+                  >
+                    {item.position.toUpperCase()}
+                  </Text>
 
-                {/* Foto del jugador */}
-                <Image
-                  source={{ uri: item.img }}
-                  className="w-full h-full object-cover"
-                  style={{ position: "absolute", zIndex: 2 }}
-                  resizeMode="contain"
-                />
-              </View>
+                  {/* Foto del jugador */}
+                  <Image
+                    source={{ uri: item.img }}
+                    className="w-full h-full object-cover"
+                    style={{ position: "absolute", zIndex: 2 }}
+                    resizeMode="contain"
+                  />
+                </View>
 
-              {/* Información del jugador */}
-              <View className="flex-col items-start">
-                <Text className="text-3xl font-bold text-[#ffffff]">
-                  {item.nickname}
-                </Text>
-                <Text className="text-lg text-[#c9c9c9]">{item.name}</Text>
-                <Text className="text-lg text-[#c9c9c9]">
-                  {item.country} | {item.position}
-                </Text>
-                <Text className="text-sm text-[#7d7d7d]">
-                  Age: {calculateAge(item.birthday)} | Years: {formatYears(item.years)}
-                </Text>
-              </View>
-            </Pressable>
-          </Link>
-        )}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 70 }}
-      />
+                {/* Información del jugador */}
+                <View className="flex-col items-start">
+                  <Text className="text-3xl font-bold text-[#ffffff]">
+                    {item.nickname}
+                  </Text>
+                  <Text className="text-lg text-[#c9c9c9]">{item.name}</Text>
+                  <Text className="text-lg text-[#c9c9c9]">
+                    {item.country} | {item.position}
+                  </Text>
+                  <Text className="text-sm text-[#7d7d7d]">
+                    Age: {calculateAge(item.birthday)} | Years:{" "}
+                    {formatYears(item.years)}
+                  </Text>
+                </View>
+              </Pressable>
+            </Link>
+          )}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 70 }}
+        />
       )}
     </View>
   );

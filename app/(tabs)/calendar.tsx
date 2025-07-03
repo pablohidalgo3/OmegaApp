@@ -324,7 +324,7 @@ export default function CalendarTab() {
                 <Pressable
                   onPress={() =>
                     Linking.openURL(
-                      `https://g2historyapi-production.up.railway.app/calendar/${item.id}`
+                      `${apiUrl}/calendar/${item.id}`
                     )
                   }
                   className="bg-gray-700 px-4 py-2 rounded-full"
