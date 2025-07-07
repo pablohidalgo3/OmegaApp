@@ -10,9 +10,12 @@ import {
 } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
-const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? { apiUrl: "", apiKey: "" };
+const { apiUrl, apiKey } = Constants.expoConfig?.extra ?? {
+  apiUrl: "",
+  apiKey: "",
+};
 
 const CALENDAR_API_ENDPOINT = apiUrl + "/matches/upcoming";
 const API_KEY = apiKey;
@@ -57,8 +60,8 @@ export default function CalendarTab() {
       try {
         const res = await fetch(CALENDAR_API_ENDPOINT, {
           headers: {
-            "Authorization": `Bearer ${API_KEY}`
-          }
+            Authorization: `Bearer ${API_KEY}`,
+          },
         });
         if (!res.ok) throw new Error("Error al obtener calendario");
         const rawMatches: any[] = await res.json();
@@ -98,6 +101,19 @@ export default function CalendarTab() {
             if (isNaN(d.getTime())) return null;
 
             // Filtrar partidos pasados
+
+            const today = new Date(
+              now.getFullYear(),
+              now.getMonth(),
+              now.getDate()
+            );
+            const matchDay = new Date(
+              d.getFullYear(),
+              d.getMonth(),
+              d.getDate()
+            );
+
+            if (matchDay < today) return null;
 
             // Formatear fecha y hora a CEST/CET
             const datePart = dateFormatter.format(d);
@@ -298,11 +314,9 @@ export default function CalendarTab() {
                         height={20}
                         viewBox="0 0 24 24"
                         fill="white"
-                        
                       >
                         <Path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z" />
                       </Svg>
-                      
                     </Pressable>
                   )}
                   {item.streams_youtube && (
@@ -323,15 +337,11 @@ export default function CalendarTab() {
                 </View>
                 <Pressable
                   onPress={() =>
-                    Linking.openURL(
-                      `${apiUrl}/calendar/${item.id}`
-                    )
+                    Linking.openURL(`${apiUrl}/calendar/${item.id}`)
                   }
                   className="bg-gray-700 px-4 py-2 rounded-full"
                 >
-                  <Text className="text-xl text-white font-semibold">
-                    📅
-                  </Text>
+                  <Text className="text-xl text-white font-semibold">📅</Text>
                 </Pressable>
               </View>
 

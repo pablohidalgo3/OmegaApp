@@ -6,6 +6,7 @@ import {
   FormerIcon,
   RankingIcon,
   CalendarIcon,
+  TimelineIcon,
 } from "../../components/Icons";
 import { Logo } from "@/components/Logo";
 import {
@@ -37,7 +38,7 @@ export default function TabLayout() {
           headerTintColor: "#000",
           tabBarStyle: [styles.tabBar],
           tabBarActiveTintColor: "black",
-          tabBarInactiveTintColor: "#E6E6E6",
+          tabBarInactiveTintColor: "#d4d2d2",
           tabBarItemStyle: {
             justifyContent: "center",
             alignItems: "center",
@@ -114,10 +115,10 @@ export default function TabLayout() {
         <Tabs.Screen
           name="about"
           options={{
-            tabBarIcon: ({ color }) => <InfoIcon color={color} />,
+            tabBarIcon: ({ color }) => <TimelineIcon color={color} />,
             headerRight: () => (
               <Text className="text-white font-bold text-2xl me-3 mb-1">
-                About
+                Timeline
               </Text>
             ),
           }}

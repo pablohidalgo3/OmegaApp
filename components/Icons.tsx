@@ -1,6 +1,7 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 // Ajuste de tipos para aceptar propiedades genéricas
 export const HomeIcon = (props: Partial<React.ComponentProps<typeof FontAwesome>>) => (
@@ -21,4 +22,8 @@ export const RankingIcon = (props: Partial<React.ComponentProps<typeof FontAweso
 
 export const CalendarIcon = (props: Partial<React.ComponentProps<typeof Entypo>>) => (
   <Entypo name="calendar" size={28} {...props} />
+);
+
+export const TimelineIcon = (props: Partial<React.ComponentProps<typeof MaterialCommunityIcons>>) => (
+  <MaterialCommunityIcons name="timeline-text-outline" size={28} {...props} />
 );
