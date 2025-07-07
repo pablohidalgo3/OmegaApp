@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   ScrollView,
-  useWindowDimensions,
 } from "react-native";
 
 const timeline = [
@@ -74,61 +73,61 @@ const timeline = [
 ];
 
 export default function TimelineScreen() {
-  const { height: screenHeight } = useWindowDimensions();
-
   return (
-    <ScrollView
-      className="bg-[#111] flex-1"
-      contentContainerStyle={{ alignItems: "center", paddingVertical: 36 }}
-    >
-      <View className="w-full items-center relative">
-        {/* Línea central, ajustada automáticamente */}
-        <View
-          className="absolute left-1/2 top-0 w-1 bg-gray-700 z-0"
-          style={{
-            height: "100%", // Ajusta el valor si alguna tarjeta es mucho más larga
-            marginLeft: -2, // Centra perfectamente la línea (w-1 => 4px, /2 = -2px)
-          }}
-        />
-        {timeline.map((event, idx) => (
+    <View className="flex-1 bg-[#111111] px-4 pt-6">
+      <ScrollView
+        contentContainerStyle={{ alignItems: "center", paddingVertical: 36 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="w-full items-center relative">
+          {/* Línea central, ajustada automáticamente */}
           <View
-            key={event.year}
-            className="w-full items-center mb-14 relative"
-            style={{ minHeight: 340 }}
-          >
-            {/* Imagen */}
-            <Image
-              source={event.image}
-              className="w-80 h-44 rounded-2xl shadow-lg border border-neutral-50 bg-gray-700 mb-2"
-              resizeMode="cover"
-            />
-
-            {/* Punto central, perfectamente centrado */}
+            className="absolute left-1/2 top-0 w-1 bg-gray-700 z-0"
+            style={{
+              height: "100%", // Ajusta el valor si alguna tarjeta es mucho más larga
+              marginLeft: -2, // Centra perfectamente la línea (w-1 => 4px, /2 = -2px)
+            }}
+          />
+          {timeline.map((event, idx) => (
             <View
-              className="absolute left-1/2 -translate-x-1/2 z-10"
-              style={{
-                top: 176 + 16 - 31, // 176px image + 16px (la mitad de mt-8=32px gap) - 12px (radio del punto)
-                width: 22,
-                height: 22,
-                borderRadius: 12,
-                backgroundColor: "#EF4444",
-                borderWidth: 4,
-                borderColor: "#000",
-              }}
-            />
+              key={event.year}
+              className="w-full items-center mb-14 relative"
+              style={{ minHeight: 340 }}
+            >
+              {/* Imagen */}
+              <Image
+                source={event.image}
+                className="w-80 h-44 rounded-2xl shadow-lg border border-neutral-50 bg-gray-700 mb-2"
+                resizeMode="cover"
+              />
 
-            {/* Tarjeta de año */}
-            <View className="bg-gray-800 rounded-lg border border-gray-700 p-5 max-w-xl w-11/12 mt-8">
-              <Text className="text-lg font-bold text-red-400 mb-2 text-center">
-                {event.year} · {event.title}
-              </Text>
-              <Text className="text-gray-300 text-base text-center">
-                {event.description}
-              </Text>
+              {/* Punto central, perfectamente centrado */}
+              <View
+                className="absolute left-1/2 -translate-x-1/2 z-10"
+                style={{
+                  top: 176 + 16 - 31, // 176px image + 16px (la mitad de mt-8=32px gap) - 12px (radio del punto)
+                  width: 22,
+                  height: 22,
+                  borderRadius: 12,
+                  backgroundColor: "#EF4444",
+                  borderWidth: 4,
+                  borderColor: "#000",
+                }}
+              />
+
+              {/* Tarjeta de año */}
+              <View className="bg-gray-800 rounded-lg border border-gray-700 p-5 max-w-xl w-11/12 mt-8">
+                <Text className="text-lg font-bold text-red-400 mb-2 text-center">
+                  {event.year} · {event.title}
+                </Text>
+                <Text className="text-gray-300 text-base text-center">
+                  {event.description}
+                </Text>
+              </View>
             </View>
-          </View>
-        ))}
-      </View>
-    </ScrollView>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }

@@ -113,7 +113,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="about"
+          name="timeline"
           options={{
             tabBarIcon: ({ color }) => <TimelineIcon color={color} />,
             headerRight: () => (
